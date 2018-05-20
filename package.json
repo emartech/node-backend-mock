@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Helper library for backend mocking and integration testing based on nock package.",
   "keywords": ["backend", "mock", "integration", "test"],
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": "Robert Beretka <robert.beretka@emarsys.com>",
   "main": "./dist/index.js",
   "scripts": {},
