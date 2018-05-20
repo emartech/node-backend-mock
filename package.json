@@ -1,0 +1,17 @@
+{
+  "name": "@emartech/backend-mock",
+  "version": "0.0.0",
+  "description": "Helper library for backend mocking and integration testing based on nock package.",
+  "keywords": ["backend", "mock", "integration", "test"],
+  "license": "MIT",
+  "author": "Robert Beretka <robert.beretka@emarsys.com>",
+  "main": "./dist/index.js",
+  "scripts": {},
+  "config": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": "10.1.0",
+    "npm": "5.8.0"
+  }
+}

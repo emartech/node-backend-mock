@@ -1,0 +1,9 @@
+# Folders
+.vscode
+.idea
+
+# Files
+.gitignore
+.npmignore
+.npmrc
+.nvmrc
