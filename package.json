@@ -22,11 +22,14 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "code:style": "tslint --config ./tslint.json --format stylish --project ./tsconfig.json",
-    "build": "rm -rf ./dist && tsc --project ./tsconfig.json"
+    "init": "npm doctor && npm prune && npm ci --update-binary",
+    "build": "rm -rf ./dist && tsc --project ./tsconfig.json",
+    "security:check": "nsp check --reporter minimal"
   },
   "config": {},
   "dependencies": {},
   "devDependencies": {
+    "nsp": "3.2.1",
     "tslint": "5.10.0",
     "typescript": "2.8.3"
   },
