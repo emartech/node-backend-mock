@@ -21,11 +21,13 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "code:style": "tslint --config ./tslint.json --format stylish --project ./tsconfig.json",
     "build": "rm -rf ./dist && tsc --project ./tsconfig.json"
   },
   "config": {},
   "dependencies": {},
   "devDependencies": {
+    "tslint": "5.10.0",
     "typescript": "2.8.3"
   },
   "engines": {
