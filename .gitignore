@@ -1,3 +1,9 @@
 # Folders
-.vscode
-.idea
+node_modules/
+typings/
+dist/
+.vscode/
+.idea/
+
+# Patterns
+**/*.log

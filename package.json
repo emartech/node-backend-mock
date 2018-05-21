@@ -2,7 +2,12 @@
   "name": "@emartech/backend-mock",
   "version": "0.0.0",
   "description": "Helper library for backend mocking and integration testing based on nock package.",
-  "keywords": ["backend", "mock", "integration", "test"],
+  "keywords": [
+    "backend",
+    "mock",
+    "integration",
+    "test"
+  ],
   "homepage": "https://github.com/emartech/node-backend-mock",
   "bugs": {
     "url": "https://github.com/emartech/node-backend-mock/issues"
@@ -14,10 +19,15 @@
   },
   "author": "Robert Beretka <robert.beretka@emarsys.com>",
   "main": "./dist/index.js",
-  "scripts": {},
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc --project ./tsconfig.json"
+  },
   "config": {},
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "2.8.3"
+  },
   "engines": {
     "node": "10.1.0",
     "npm": "5.8.0"

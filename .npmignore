@@ -1,9 +1,17 @@
 # Folders
-.vscode
-.idea
+node_modules/
+typings/
+src/
+.vscode/
+.idea/
+
+# Patterns
+**/*.log
 
 # Files
 .gitignore
 .npmignore
 .npmrc
 .nvmrc
+package-lock.json
+tsconfig.json
