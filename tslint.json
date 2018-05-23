@@ -27,7 +27,7 @@
       ]
     }],
     "no-misused-new": [false],
-    "no-inferrable-types": [true],
+    "no-inferrable-types": [true, "ignore-properties"],
     "no-magic-numbers": [false],
     "no-non-null-assertion": [true],
     "no-parameter-reassignment": [true],
@@ -93,6 +93,6 @@
     "quotemark": [true, "single", "avoid-escape"],
     "return-undefined": [true],
     "type-literal-delimiter": [true],
-    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"]
   }
 }
