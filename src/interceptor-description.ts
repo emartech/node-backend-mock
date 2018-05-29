@@ -37,7 +37,7 @@ export class InterceptorDescription {
     return this._responseStatusCode;
   }
 
-  public get responseBosy(): Body {
+  public get responseBody(): Body {
     return this._responseBody;
   }
 

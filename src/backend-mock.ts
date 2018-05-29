@@ -1,4 +1,6 @@
 import { Host, Path, StatusCode, Body, InterceptorDescription } from './interceptor-description';
+import { registerInterceptor } from './register-interceptor';
+import nock from 'nock';
 
 export interface RequestOptions {
   path: Path;
@@ -23,29 +25,36 @@ export class BackendMock {
   }
 
   public whenGET({ path = '/' }: RequestOptions): BackendMock {
-    this.addDescription(InterceptorDescription
-      .create({ host: this._host })
-      .setMethod('GET')
-      .setPath(path));
+    this.addDescription(
+      InterceptorDescription
+        .create({ host: this._host })
+        .setMethod('GET')
+        .setPath(path));
 
     return this;
   }
 
   public whenPOST({ path = '/' }: RequestOptions): BackendMock {
-    this.addDescription(InterceptorDescription
-      .create({ host: this._host })
-      .setMethod('POST')
-      .setPath(path));
+    this.addDescription(
+      InterceptorDescription
+        .create({ host: this._host })
+        .setMethod('POST')
+        .setPath(path));
 
     return this;
   }
 
   public respondWith({ statusCode = 200, body = {} }: ResponseOptions): void {
-    this._descriptions.forEach(description => {
-      description
-        .setResponseStatusCode(statusCode)
-        .setResponseBody(body);
-    });
+    for (const description of this._descriptions) {
+      registerInterceptor(
+        description
+          .setResponseStatusCode(statusCode)
+          .setResponseBody(body));
+    }
+  }
+
+  public clean(): void {
+    nock.cleanAll();
   }
 
   private addDescription(description: InterceptorDescription): void {
