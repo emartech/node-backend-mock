@@ -1,24 +1,27 @@
 
+export type Host = string;
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
-export type ResponseBody = object | undefined;
+export type Path = string;
+export type StatusCode = number;
+export type Body = object;
 
 export class InterceptorDescription {
 
-  public static create({ host }: { host: string }): InterceptorDescription {
+  public static create({ host }: { host: Host }): InterceptorDescription {
     return new InterceptorDescription(host);
   }
 
-  private _host: string;
+  private _host: Host;
   private _method: Method = 'GET';
-  private _path: string = '/';
-  private _responseStatusCode: number = 200;
-  private _responseBody: ResponseBody = undefined;
+  private _path: Path = '/';
+  private _responseStatusCode: StatusCode = 200;
+  private _responseBody: Body = {};
 
-  constructor(host: string) {
+  constructor(host: Host) {
     this._host = host;
   }
 
-  public get host(): string {
+  public get host(): Host {
     return this._host;
   }
 
@@ -26,15 +29,15 @@ export class InterceptorDescription {
     return this._method;
   }
 
-  public get path(): string {
+  public get path(): Path {
     return this._path;
   }
 
-  public get responseStatusCode(): number {
+  public get responseStatusCode(): StatusCode {
     return this._responseStatusCode;
   }
 
-  public get responseBosy(): ResponseBody {
+  public get responseBosy(): Body {
     return this._responseBody;
   }
 
@@ -43,17 +46,17 @@ export class InterceptorDescription {
     return this;
   }
 
-  public setPath(path: string): InterceptorDescription {
+  public setPath(path: Path): InterceptorDescription {
     this._path = path;
     return this;
   }
 
-  public setResponseStatusCode(statusCode: number): InterceptorDescription {
+  public setResponseStatusCode(statusCode: StatusCode): InterceptorDescription {
     this._responseStatusCode = statusCode;
     return this;
   }
 
-  public setResponseBody(responseBody: ResponseBody): InterceptorDescription {
+  public setResponseBody(responseBody: Body): InterceptorDescription {
     this._responseBody = responseBody;
     return this;
   }
