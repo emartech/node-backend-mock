@@ -1,0 +1,12 @@
+--check-leaks
+--exit
+--reporter spec
+--require source-map-support/register
+--require ts-node/register
+--retries 0
+--slow 100
+--throw-deprecation
+--timeout 2000
+--ui bdd
+--use_strict
+--no-color

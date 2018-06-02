@@ -3,12 +3,12 @@ import { registerInterceptor } from './register-interceptor';
 import nock from 'nock';
 
 export interface RequestOptions {
-  path: Path;
+  path?: Path;
 }
 
 export interface ResponseOptions {
-  statusCode: StatusCode;
-  body: Body;
+  statusCode?: StatusCode;
+  body?: Body;
 }
 
 export class BackendMock {
@@ -24,7 +24,7 @@ export class BackendMock {
     this._host = host;
   }
 
-  public whenGET({ path = '/' }: RequestOptions): BackendMock {
+  public whenGET({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .create({ host: this._host })
@@ -34,7 +34,7 @@ export class BackendMock {
     return this;
   }
 
-  public whenPOST({ path = '/' }: RequestOptions): BackendMock {
+  public whenPOST({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .create({ host: this._host })
@@ -44,7 +44,7 @@ export class BackendMock {
     return this;
   }
 
-  public respondWith({ statusCode = 200, body = {} }: ResponseOptions): void {
+  public respondWith({ statusCode = 200, body = {} }: ResponseOptions = {}): void {
     for (const description of this._descriptions) {
       registerInterceptor(
         description
