@@ -1,9 +1,10 @@
 # Folders
-node_modules/
-typings/
-src/
-.vscode/
 .idea/
+.vscode/
+conig/
+node_modules/
+src/
+typings/
 
 # Patterns
 **/*.log
