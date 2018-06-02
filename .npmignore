@@ -10,6 +10,7 @@ src/
 
 # Files
 .gitignore
+.mocharc
 .npmignore
 .npmrc
 .nvmrc
