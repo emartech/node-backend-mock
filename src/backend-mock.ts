@@ -1,5 +1,8 @@
 import { Host, Path, StatusCode, Body, InterceptorDescription } from './interceptor-description';
 import { registerInterceptor } from './register-interceptor';
+import { BackendMockError } from './backend-mock-error';
+import { unique } from './utils';
+
 import nock from 'nock';
 
 export interface RequestOptions {
@@ -54,11 +57,23 @@ export class BackendMock {
   }
 
   public clean(): void {
+    const pendingInterceptors = this.getPendingInterceptors();
+
+    this._descriptions = [];
     nock.cleanAll();
+
+    if (pendingInterceptors.length !== 0) {
+      throw new BackendMockError(pendingInterceptors);
+    }
   }
 
   private addDescription(description: InterceptorDescription): void {
     this._descriptions = [...this._descriptions, description];
+  }
+
+  private getPendingInterceptors(): string[] {
+    if (nock.isDone()) return [];
+    return unique(nock.pendingMocks());
   }
 
 }
