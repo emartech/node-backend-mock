@@ -1,7 +1,7 @@
 import { Host, Path, StatusCode, Body, InterceptorDescription } from './interceptor-description';
 import { registerInterceptor } from './register-interceptor';
 import { BackendMockError } from './backend-mock-error';
-import { unique } from './utils';
+import { isEmpty, not, unique } from './utils';
 
 import nock from 'nock';
 
@@ -62,7 +62,7 @@ export class BackendMock {
     this._descriptions = [];
     nock.cleanAll();
 
-    if (pendingInterceptors.length !== 0) {
+    if (not(isEmpty(pendingInterceptors))) {
       throw new BackendMockError(pendingInterceptors);
     }
   }
