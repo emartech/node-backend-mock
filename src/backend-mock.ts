@@ -47,6 +47,46 @@ export class BackendMock {
     return this;
   }
 
+  public whenPUT({ path = '/' }: RequestOptions = {}): BackendMock {
+    this.addDescription(
+      InterceptorDescription
+        .create({ host: this._host })
+        .setMethod('PUT')
+        .setPath(path));
+
+    return this;
+  }
+
+  public whenPATCH({ path = '/' }: RequestOptions = {}): BackendMock {
+    this.addDescription(
+      InterceptorDescription
+        .create({ host: this._host })
+        .setMethod('PATCH')
+        .setPath(path));
+
+    return this;
+  }
+
+  public whenDELETE({ path = '/' }: RequestOptions = {}): BackendMock {
+    this.addDescription(
+      InterceptorDescription
+        .create({ host: this._host })
+        .setMethod('DELETE')
+        .setPath(path));
+
+    return this;
+  }
+
+  public whenHEAD({ path = '/' }: RequestOptions = {}): BackendMock {
+    this.addDescription(
+      InterceptorDescription
+        .create({ host: this._host })
+        .setMethod('HEAD')
+        .setPath(path));
+
+    return this;
+  }
+
   public respondWith({ statusCode = 200, body = {} }: ResponseOptions = {}): void {
     for (const description of this._descriptions) {
       registerInterceptor(

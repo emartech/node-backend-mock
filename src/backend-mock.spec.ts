@@ -142,6 +142,274 @@ describe('Backend Mock', () => {
 
   });
 
+  context('when PUT request mocked', () => {
+
+    it('should respond to the issued request on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPUT()
+        .respondWith();
+
+      const response = await axios.put(host);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond to the issued request on the specified host and given path', async () => {
+      const path = '/test';
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPUT({ path })
+        .respondWith();
+
+      const response = await axios.put(`${host}${path}`);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond with given status to the issued request on the specified host', async () => {
+      const expectedStatus = 200;
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPUT()
+        .respondWith({ statusCode: expectedStatus });
+
+      const { status } = await axios.put(host);
+
+      expect(status).to.eql(expectedStatus);
+
+      mock.clean();
+    });
+
+    it('should respond with given body to the issued request on the specified host', async () => {
+      const expectedBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPUT()
+        .respondWith({ body: expectedBody });
+
+      const { data } = await axios.put(host);
+
+      expect(data).to.eql(expectedBody);
+
+      mock.clean();
+    });
+
+  });
+
+  context('when PATCH request mocked', () => {
+
+    it('should respond to the issued request on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPATCH()
+        .respondWith();
+
+      const response = await axios.patch(host);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond to the issued request on the specified host and given path', async () => {
+      const path = '/test';
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPATCH({ path })
+        .respondWith();
+
+      const response = await axios.patch(`${host}${path}`);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond with given status to the issued request on the specified host', async () => {
+      const expectedStatus = 200;
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPATCH()
+        .respondWith({ statusCode: expectedStatus });
+
+      const { status } = await axios.patch(host);
+
+      expect(status).to.eql(expectedStatus);
+
+      mock.clean();
+    });
+
+    it('should respond with given body to the issued request on the specified host', async () => {
+      const expectedBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenPATCH()
+        .respondWith({ body: expectedBody });
+
+      const { data } = await axios.patch(host);
+
+      expect(data).to.eql(expectedBody);
+
+      mock.clean();
+    });
+
+  });
+
+  context('when DELETE request mocked', () => {
+
+    it('should respond to the issued request on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenDELETE()
+        .respondWith();
+
+      const response = await axios.delete(host);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond to the issued request on the specified host and given path', async () => {
+      const path = '/test';
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenDELETE({ path })
+        .respondWith();
+
+      const response = await axios.delete(`${host}${path}`);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond with given status to the issued request on the specified host', async () => {
+      const expectedStatus = 200;
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenDELETE()
+        .respondWith({ statusCode: expectedStatus });
+
+      const { status } = await axios.delete(host);
+
+      expect(status).to.eql(expectedStatus);
+
+      mock.clean();
+    });
+
+    it('should respond with given body to the issued request on the specified host', async () => {
+      const expectedBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenDELETE()
+        .respondWith({ body: expectedBody });
+
+      const { data } = await axios.delete(host);
+
+      expect(data).to.eql(expectedBody);
+
+      mock.clean();
+    });
+
+  });
+
+  context('when HEAD request mocked', () => {
+
+    it('should respond to the issued request on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenHEAD()
+        .respondWith();
+
+      const response = await axios.head(host);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond to the issued request on the specified host and given path', async () => {
+      const path = '/test';
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenHEAD({ path })
+        .respondWith();
+
+      const response = await axios.head(`${host}${path}`);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond with given status to the issued request on the specified host', async () => {
+      const expectedStatus = 200;
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenHEAD()
+        .respondWith({ statusCode: expectedStatus });
+
+      const { status } = await axios.head(host);
+
+      expect(status).to.eql(expectedStatus);
+
+      mock.clean();
+    });
+
+    it('should respond with given body to the issued request on the specified host', async () => {
+      const expectedBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.create({ host });
+
+      mock
+        .whenHEAD()
+        .respondWith({ body: expectedBody });
+
+      const { data } = await axios.head(host);
+
+      expect(data).to.eql(expectedBody);
+
+      mock.clean();
+    });
+
+  });
+
   context('#clean', () => {
 
     it('should throw exception if there is unresovled interceptor', async () => {
