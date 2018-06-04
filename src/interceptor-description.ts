@@ -7,7 +7,7 @@ export type Body = object;
 
 export class InterceptorDescription {
 
-  public static create({ host }: { host: Host }): InterceptorDescription {
+  public static createFor(host: Host): InterceptorDescription {
     return new InterceptorDescription(host);
   }
 

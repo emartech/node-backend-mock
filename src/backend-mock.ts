@@ -16,7 +16,7 @@ export interface ResponseOptions {
 
 export class BackendMock {
 
-  public static create({ host }: { host: Host }): BackendMock {
+  public static createFor(host: Host): BackendMock {
     return new BackendMock(host);
   }
 
@@ -30,7 +30,7 @@ export class BackendMock {
   public whenGET({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
-        .create({ host: this._host })
+        .createFor(this._host)
         .setMethod('GET')
         .setPath(path));
 
@@ -40,7 +40,7 @@ export class BackendMock {
   public whenPOST({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
-        .create({ host: this._host })
+        .createFor(this._host)
         .setMethod('POST')
         .setPath(path));
 
@@ -50,7 +50,7 @@ export class BackendMock {
   public whenPUT({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
-        .create({ host: this._host })
+        .createFor(this._host)
         .setMethod('PUT')
         .setPath(path));
 
@@ -60,7 +60,7 @@ export class BackendMock {
   public whenPATCH({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
-        .create({ host: this._host })
+        .createFor(this._host)
         .setMethod('PATCH')
         .setPath(path));
 
@@ -70,7 +70,7 @@ export class BackendMock {
   public whenDELETE({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
-        .create({ host: this._host })
+        .createFor(this._host)
         .setMethod('DELETE')
         .setPath(path));
 
@@ -80,7 +80,7 @@ export class BackendMock {
   public whenHEAD({ path = '/' }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
-        .create({ host: this._host })
+        .createFor(this._host)
         .setMethod('HEAD')
         .setPath(path));
 

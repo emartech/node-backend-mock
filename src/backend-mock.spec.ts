@@ -12,7 +12,7 @@ describe('Backend Mock', () => {
 
     it('should respond to the issued request on the specified host', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET()
@@ -28,7 +28,7 @@ describe('Backend Mock', () => {
     it('should respond to the issued request on the specified host and given path', async () => {
       const path = '/test';
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET({ path })
@@ -44,7 +44,7 @@ describe('Backend Mock', () => {
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET()
@@ -60,7 +60,7 @@ describe('Backend Mock', () => {
     it('should respond with given body to the issued request on the specified host', async () => {
       const expectedBody = { irrelevant: true };
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET()
@@ -79,7 +79,7 @@ describe('Backend Mock', () => {
 
     it('should respond to the issued request on the specified host', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPOST()
@@ -95,7 +95,7 @@ describe('Backend Mock', () => {
     it('should respond to the issued request on the specified host and given path', async () => {
       const path = '/test';
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPOST({ path })
@@ -111,7 +111,7 @@ describe('Backend Mock', () => {
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPOST()
@@ -127,7 +127,7 @@ describe('Backend Mock', () => {
     it('should respond with given body to the issued request on the specified host', async () => {
       const expectedBody = { irrelevant: true };
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPOST()
@@ -146,7 +146,7 @@ describe('Backend Mock', () => {
 
     it('should respond to the issued request on the specified host', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPUT()
@@ -162,7 +162,7 @@ describe('Backend Mock', () => {
     it('should respond to the issued request on the specified host and given path', async () => {
       const path = '/test';
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPUT({ path })
@@ -178,7 +178,7 @@ describe('Backend Mock', () => {
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPUT()
@@ -194,7 +194,7 @@ describe('Backend Mock', () => {
     it('should respond with given body to the issued request on the specified host', async () => {
       const expectedBody = { irrelevant: true };
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPUT()
@@ -213,7 +213,7 @@ describe('Backend Mock', () => {
 
     it('should respond to the issued request on the specified host', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPATCH()
@@ -229,7 +229,7 @@ describe('Backend Mock', () => {
     it('should respond to the issued request on the specified host and given path', async () => {
       const path = '/test';
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPATCH({ path })
@@ -245,7 +245,7 @@ describe('Backend Mock', () => {
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPATCH()
@@ -261,7 +261,7 @@ describe('Backend Mock', () => {
     it('should respond with given body to the issued request on the specified host', async () => {
       const expectedBody = { irrelevant: true };
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenPATCH()
@@ -280,7 +280,7 @@ describe('Backend Mock', () => {
 
     it('should respond to the issued request on the specified host', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenDELETE()
@@ -296,7 +296,7 @@ describe('Backend Mock', () => {
     it('should respond to the issued request on the specified host and given path', async () => {
       const path = '/test';
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenDELETE({ path })
@@ -312,7 +312,7 @@ describe('Backend Mock', () => {
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenDELETE()
@@ -328,7 +328,7 @@ describe('Backend Mock', () => {
     it('should respond with given body to the issued request on the specified host', async () => {
       const expectedBody = { irrelevant: true };
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenDELETE()
@@ -347,7 +347,7 @@ describe('Backend Mock', () => {
 
     it('should respond to the issued request on the specified host', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenHEAD()
@@ -363,7 +363,7 @@ describe('Backend Mock', () => {
     it('should respond to the issued request on the specified host and given path', async () => {
       const path = '/test';
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenHEAD({ path })
@@ -379,7 +379,7 @@ describe('Backend Mock', () => {
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenHEAD()
@@ -395,7 +395,7 @@ describe('Backend Mock', () => {
     it('should respond with given body to the issued request on the specified host', async () => {
       const expectedBody = { irrelevant: true };
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenHEAD()
@@ -414,7 +414,7 @@ describe('Backend Mock', () => {
 
     it('should throw exception if there is unresovled interceptor', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET()
@@ -426,7 +426,7 @@ describe('Backend Mock', () => {
 
     it('should throw exception if there are multiple unresovled interceptors', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET()
@@ -442,7 +442,7 @@ describe('Backend Mock', () => {
 
     it('should reset interceptors', async () => {
       const host = 'http://localhost';
-      const mock = BackendMock.create({ host });
+      const mock = BackendMock.createFor(host);
 
       mock
         .whenGET()
