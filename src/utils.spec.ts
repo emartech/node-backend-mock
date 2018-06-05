@@ -37,7 +37,7 @@ describe('Utils', () => {
 
   });
 
-  context('#isEpmty', () => {
+  context('#isEmpty', () => {
 
     it('should return true if given array has zero elements', () => {
       const result = isEmpty([]);

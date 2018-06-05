@@ -1,7 +1,7 @@
 
 export type Host = string;
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
-export type Path = string;
+export type Path = string | RegExp;
 export type StatusCode = number;
 export type Body = object;
 

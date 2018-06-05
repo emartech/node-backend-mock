@@ -40,6 +40,22 @@ describe('Backend Mock', () => {
       mock.clean();
     });
 
+    it('should respond to the issued request on the specified host and matching path', async () => {
+      const path = '/test';
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenPUT({ path: /test$/ })
+        .respondWith();
+
+      const response = await axios.put(`${host}${path}`);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
