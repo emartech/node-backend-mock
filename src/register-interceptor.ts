@@ -1,5 +1,5 @@
 import { InterceptorDescription, Body } from './interceptor-description';
-import { isEmpty } from './utils';
+import { isEmpty, matchObjects } from './utils';
 
 import nock from 'nock';
 
@@ -9,7 +9,7 @@ export const registerInterceptor = (desc: InterceptorDescription): nock.Scope =>
     .reply(desc.responseStatusCode, desc.responseBody);
 };
 
-function requestBody(desc: InterceptorDescription): Body | (() => boolean) {
+function requestBody(desc: InterceptorDescription): Body | ((body: Body) => boolean) {
   if (isEmpty(desc.requestBody)) return () => true;
-  else return desc.requestBody;
+  else return matchObjects(desc.requestBody);
 }

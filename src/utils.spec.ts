@@ -1,4 +1,4 @@
-import { isFunction, isEmpty, not, unique } from './utils';
+import { isFunction, isEmpty, not, unique, matchObjects } from './utils';
 import { expect } from 'chai';
 
 describe('Utils', () => {
@@ -90,6 +90,40 @@ describe('Utils', () => {
     it('should return given array without duplications', () => {
       const result = unique([1, 1, 2, 2, 3]);
       expect(result).to.eql([1, 2, 3]);
+    });
+
+  });
+
+  context('#matchObjects', () => {
+
+    it('should return true if both objects are empty', () => {
+      const result = matchObjects({})({});
+      expect(result).to.eql(true);
+    });
+
+    it('should return true if matched object is empty', () => {
+      const result = matchObjects({})({ field: 'value', extra: true });
+      expect(result).to.eql(true);
+    });
+
+    it('should return true if matched object has fields from target', () => {
+      const result = matchObjects({ field: 'value' })({ field: 'value', extra: true });
+      expect(result).to.eql(true);
+    });
+
+    it('should return true if matched object has the same fields from target', () => {
+      const result = matchObjects({ field: 'value', extra: true })({ field: 'value', extra: true });
+      expect(result).to.eql(true);
+    });
+
+    it('should return false if matched object has more fields than target', () => {
+      const result = matchObjects({ field: 'value', extra: true })({ field: 'value' });
+      expect(result).to.eql(false);
+    });
+
+    it('should return false if matched object has same fields with different values', () => {
+      const result = matchObjects({ field: 'value', extra: false })({ field: 'value', extra: true });
+      expect(result).to.eql(false);
     });
 
   });

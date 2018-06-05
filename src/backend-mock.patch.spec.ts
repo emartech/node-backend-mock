@@ -119,6 +119,22 @@ describe('Backend Mock', () => {
       mock.clean();
     });
 
+    it('should respond to the issued request on the specified host with matching request body', async () => {
+      const requestBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenPATCH({ body: requestBody })
+        .respondWith();
+
+      const response = await axios.patch(host, { ...requestBody, extra: 'value' });
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
   });
 
 });
