@@ -1,4 +1,4 @@
-import { Host, Path, StatusCode, Body, InterceptorDescription } from './interceptor-description';
+import { Host, Path, Query, StatusCode, Body, InterceptorDescription } from './interceptor-description';
 import { registerInterceptor } from './register-interceptor';
 import { BackendMockError } from './backend-mock-error';
 import { isEmpty, not, unique } from './utils';
@@ -7,6 +7,7 @@ import nock from 'nock';
 
 export interface RequestOptions {
   path?: Path;
+  query?: Query;
   body?: Body;
 }
 
@@ -28,65 +29,71 @@ export class BackendMock {
     this._host = host;
   }
 
-  public whenGET({ path = '/' }: RequestOptions = {}): BackendMock {
+  public whenGET({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('GET')
-        .setPath(path));
+        .setPath(path)
+        .setQuery(query));
 
     return this;
   }
 
-  public whenPOST({ path = '/', body = {} }: RequestOptions = {}): BackendMock {
+  public whenPOST({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('POST')
         .setPath(path)
+        .setQuery(query)
         .setRequestBody(body));
 
     return this;
   }
 
-  public whenPUT({ path = '/', body = {} }: RequestOptions = {}): BackendMock {
+  public whenPUT({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('PUT')
         .setPath(path)
+        .setQuery(query)
         .setRequestBody(body));
 
     return this;
   }
 
-  public whenPATCH({ path = '/', body = {} }: RequestOptions = {}): BackendMock {
+  public whenPATCH({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('PATCH')
         .setPath(path)
+        .setQuery(query)
         .setRequestBody(body));
 
     return this;
   }
 
-  public whenDELETE({ path = '/' }: RequestOptions = {}): BackendMock {
+  public whenDELETE({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('DELETE')
-        .setPath(path));
+        .setPath(path)
+        .setQuery(query));
 
     return this;
   }
 
-  public whenHEAD({ path = '/' }: RequestOptions = {}): BackendMock {
+  public whenHEAD({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('HEAD')
-        .setPath(path));
+        .setPath(path)
+        .setQuery(query));
 
     return this;
   }

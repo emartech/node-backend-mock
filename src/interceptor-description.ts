@@ -3,6 +3,7 @@ import nock from 'nock';
 export type Host = string;
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
 export type Path = string | RegExp;
+export type Query = object;
 export type StatusCode = number;
 export type Body = object;
 
@@ -15,6 +16,7 @@ export class InterceptorDescription {
   private _host: Host;
   private _method: Method = 'GET';
   private _path: Path = '/';
+  private _query: Query = {};
   private _requestBody: Body = {};
   private _responseStatusCode: StatusCode = 200;
   private _responseBody: Body = {};
@@ -37,6 +39,10 @@ export class InterceptorDescription {
 
   public get path(): Path {
     return this._path;
+  }
+
+  public get query(): Query {
+    return this._query;
   }
 
   public get requestBody(): Body {
@@ -62,6 +68,11 @@ export class InterceptorDescription {
 
   public setPath(path: Path): InterceptorDescription {
     this._path = path;
+    return this;
+  }
+
+  public setQuery(query: Query): InterceptorDescription {
+    this._query = query;
     return this;
   }
 
