@@ -1,3 +1,4 @@
+import nock from 'nock';
 
 export type Host = string;
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
@@ -16,6 +17,10 @@ export class InterceptorDescription {
   private _path: Path = '/';
   private _responseStatusCode: StatusCode = 200;
   private _responseBody: Body = {};
+  private _options: nock.Options = {
+    allowUnmocked: false,
+    badheaders: [],
+  };
 
   constructor(host: Host) {
     this._host = host;
@@ -39,6 +44,10 @@ export class InterceptorDescription {
 
   public get responseBody(): Body {
     return this._responseBody;
+  }
+
+  public get options(): nock.Options {
+    return this._options;
   }
 
   public setMethod(method: Method): InterceptorDescription {
