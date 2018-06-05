@@ -9,8 +9,23 @@ describe('Backend Mock', () => {
 
   context('when HEAD request mocked', () => {
 
-    it('should respond to the issued request on the specified host', async () => {
+    it('should respond to the issued request on the specified host on http protocol', async () => {
       const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenHEAD()
+        .respondWith();
+
+      const response = await axios.head(host);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond to the issued request on the specified host on https protocol', async () => {
+      const host = 'https://localhost';
       const mock = BackendMock.createFor(host);
 
       mock
