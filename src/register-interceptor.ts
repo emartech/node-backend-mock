@@ -1,16 +1,11 @@
-import { InterceptorDescription, Body } from './interceptor-description';
-import { isEmpty, matchObjects } from './utils';
+import { InterceptorDescription } from './interceptor-description';
+import { matchObjects } from './utils';
 
 import nock from 'nock';
 
 export const registerInterceptor = (desc: InterceptorDescription): nock.Scope => {
   return nock(desc.host, desc.options)
-    .intercept(desc.path, desc.method, requestBody(desc))
-    .query(desc.query)
+    .intercept(desc.path, desc.method, matchObjects(desc.requestBody))
+    .query(matchObjects(desc.query))
     .reply(desc.responseStatusCode, desc.responseBody);
 };
-
-function requestBody(desc: InterceptorDescription): Body | ((body: Body) => boolean) {
-  if (isEmpty(desc.requestBody)) return () => true;
-  else return matchObjects(desc.requestBody);
-}

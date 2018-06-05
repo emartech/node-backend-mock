@@ -86,6 +86,21 @@ describe('Backend Mock', () => {
       mock.clean();
     });
 
+    it('should respond to the issued request with matching query on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenGET({ query: { param: 'value' } })
+        .respondWith();
+
+      const response = await axios.get(`${host}?param=value&extra=true`);
+
+      expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
