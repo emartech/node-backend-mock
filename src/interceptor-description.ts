@@ -15,6 +15,7 @@ export class InterceptorDescription {
   private _host: Host;
   private _method: Method = 'GET';
   private _path: Path = '/';
+  private _requestBody: Body = {};
   private _responseStatusCode: StatusCode = 200;
   private _responseBody: Body = {};
   private _options: nock.Options = {
@@ -38,6 +39,10 @@ export class InterceptorDescription {
     return this._path;
   }
 
+  public get requestBody(): Body {
+    return this._requestBody;
+  }
+
   public get responseStatusCode(): StatusCode {
     return this._responseStatusCode;
   }
@@ -57,6 +62,11 @@ export class InterceptorDescription {
 
   public setPath(path: Path): InterceptorDescription {
     this._path = path;
+    return this;
+  }
+
+  public setRequestBody(requestBody: Body): InterceptorDescription {
+    this._requestBody = requestBody;
     return this;
   }
 

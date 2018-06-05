@@ -49,6 +49,16 @@ describe('Utils', () => {
       expect(result).to.eql(false);
     });
 
+    it('should return true if given object has zero fields', () => {
+      const result = isEmpty({});
+      expect(result).to.eql(true);
+    });
+
+    it('should return false if given object has fields', () => {
+      const result = isEmpty({ field: 'value' });
+      expect(result).to.eql(false);
+    });
+
   });
 
   context('#not', () => {

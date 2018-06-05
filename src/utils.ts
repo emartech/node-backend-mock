@@ -3,8 +3,9 @@ export const isFunction = <T>(object: T): boolean => {
   return typeof object === 'function';
 };
 
-export const isEmpty = <T>(array: T[]): boolean => {
-  return array.length === 0;
+export const isEmpty = <T>(value: T[] | T): boolean => {
+  if (Array.isArray(value)) return value.length === 0;
+  else return Object.getOwnPropertyNames(value).length === 0;
 };
 
 export const not = (value: boolean): boolean => {

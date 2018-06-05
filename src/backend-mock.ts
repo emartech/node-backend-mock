@@ -7,6 +7,7 @@ import nock from 'nock';
 
 export interface RequestOptions {
   path?: Path;
+  body?: Body;
 }
 
 export interface ResponseOptions {
@@ -37,32 +38,35 @@ export class BackendMock {
     return this;
   }
 
-  public whenPOST({ path = '/' }: RequestOptions = {}): BackendMock {
+  public whenPOST({ path = '/', body = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('POST')
-        .setPath(path));
+        .setPath(path)
+        .setRequestBody(body));
 
     return this;
   }
 
-  public whenPUT({ path = '/' }: RequestOptions = {}): BackendMock {
+  public whenPUT({ path = '/', body = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('PUT')
-        .setPath(path));
+        .setPath(path)
+        .setRequestBody(body));
 
     return this;
   }
 
-  public whenPATCH({ path = '/' }: RequestOptions = {}): BackendMock {
+  public whenPATCH({ path = '/', body = {} }: RequestOptions = {}): BackendMock {
     this.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('PATCH')
-        .setPath(path));
+        .setPath(path)
+        .setRequestBody(body));
 
     return this;
   }
