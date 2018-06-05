@@ -1,4 +1,4 @@
-import { getExceptionMessage, isFunction } from './utils';
+import { isFunction } from './utils';
 
 /* tslint:disable no-unbound-method */
 
@@ -15,4 +15,8 @@ export class BackendMockError extends Error {
     }
   }
 
+}
+
+function getExceptionMessage(interceptors: string[]): string {
+  return `There are unresolved interceptors!\n\t${interceptors.join('\n\t')}\n`;
 }

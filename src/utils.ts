@@ -16,7 +16,3 @@ export const unique = <T>(array: T[]): T[] => {
     return self.indexOf(value) === index;
   });
 };
-
-export const getExceptionMessage = (interceptors: string[]): string => {
-  return `There are unresolved interceptors!\n\t${interceptors.join('\n\t')}\n`;
-};
