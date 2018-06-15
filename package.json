@@ -24,7 +24,6 @@
     "code:style": "tslint --config ./tslint.json --format stylish --project ./tsconfig.json",
     "init": "npm doctor && npm prune && npm ci --update-binary",
     "build": "rm -rf ./dist && tsc --project ./config/tsconfig.build.json",
-    "security:check": "nsp check --reporter minimal",
     "test": "TS_NODE_PROJECT=./config/tsconfig.test.json mocha --opts .mocharc './src/**/*.spec.ts'"
   },
   "config": {},
@@ -41,7 +40,6 @@
     "axios": "0.18.0",
     "chai": "4.1.2",
     "mocha": "5.2.0",
-    "nsp": "3.2.1",
     "source-map-support": "0.5.6",
     "ts-node": "6.1.1",
     "tslint": "5.10.0",
