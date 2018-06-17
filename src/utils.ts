@@ -16,12 +16,6 @@ export const not = (value: boolean): boolean => {
   return !value;
 };
 
-export const unique = <T>(array: T[]): T[] => {
-  return array.filter((value: T, index: number, self: T[]) => {
-    return self.indexOf(value) === index;
-  });
-};
-
 export const matchObjects = <T extends U, U extends IndexableObject>(matched: T) => (target: U): boolean => {
   return Object.keys(matched).every((field: string) => {
     return Object.keys(target).includes(field) && matched[field] === target[field];

@@ -1,4 +1,4 @@
-import { isFunction, isEmpty, not, unique, matchObjects, add, set } from './utils';
+import { isFunction, isEmpty, not, matchObjects, add, set } from './utils';
 import { expect } from 'chai';
 
 describe('Utils', () => {
@@ -71,25 +71,6 @@ describe('Utils', () => {
     it('should return false if given value is true', () => {
       const result = not(true);
       expect(result).to.eql(false);
-    });
-
-  });
-
-  context('#unique', () => {
-
-    it('should return given array if it empty', () => {
-      const result = unique([]);
-      expect(result).to.eql([]);
-    });
-
-    it('should return given array if it does not contain duplications', () => {
-      const result = unique([1, 2, 3]);
-      expect(result).to.eql([1, 2, 3]);
-    });
-
-    it('should return given array without duplications', () => {
-      const result = unique([1, 1, 2, 2, 3]);
-      expect(result).to.eql([1, 2, 3]);
     });
 
   });

@@ -1,7 +1,8 @@
 import { Host, Path, Query, StatusCode, Body, InterceptorDescription } from './interceptor-description';
+import { InterceptorDescriptionRegistry } from './interceptor-description-registry';
 import { registerInterceptor } from './register-interceptor';
 import { BackendMockError } from './backend-mock-error';
-import { isEmpty, not, unique } from './utils';
+import { isEmpty, not } from './utils';
 
 import nock from 'nock';
 
@@ -22,15 +23,16 @@ export class BackendMock {
     return new BackendMock(host);
   }
 
+  private _registry: InterceptorDescriptionRegistry;
   private _host: Host;
-  private _descriptions: InterceptorDescription[] = [];
 
   constructor(host: Host) {
+    this._registry = new InterceptorDescriptionRegistry();
     this._host = host;
   }
 
   public whenGET({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
-    this.addDescription(
+    this._registry.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('GET')
@@ -41,7 +43,7 @@ export class BackendMock {
   }
 
   public whenPOST({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
-    this.addDescription(
+    this._registry.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('POST')
@@ -53,7 +55,7 @@ export class BackendMock {
   }
 
   public whenPUT({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
-    this.addDescription(
+    this._registry.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('PUT')
@@ -65,7 +67,7 @@ export class BackendMock {
   }
 
   public whenPATCH({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
-    this.addDescription(
+    this._registry.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('PATCH')
@@ -77,7 +79,7 @@ export class BackendMock {
   }
 
   public whenDELETE({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
-    this.addDescription(
+    this._registry.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('DELETE')
@@ -88,7 +90,7 @@ export class BackendMock {
   }
 
   public whenHEAD({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
-    this.addDescription(
+    this._registry.addDescription(
       InterceptorDescription
         .createFor(this._host)
         .setMethod('HEAD')
@@ -99,18 +101,20 @@ export class BackendMock {
   }
 
   public respondWith({ statusCode = 200, body = {} }: ResponseOptions = {}): void {
-    for (const description of this._descriptions) {
+    for (const { index, description } of this._registry.getUnregistereds()) {
       registerInterceptor(
         description
           .setResponseStatusCode(statusCode)
           .setResponseBody(body));
+
+      this._registry.registerDescription(index);
     }
   }
 
   public clean(): void {
     const pendingInterceptors = this.getPendingInterceptors();
 
-    this._descriptions = [];
+    this._registry.clear();
     nock.cleanAll();
 
     if (not(isEmpty(pendingInterceptors))) {
@@ -118,13 +122,9 @@ export class BackendMock {
     }
   }
 
-  private addDescription(description: InterceptorDescription): void {
-    this._descriptions = [...this._descriptions, description];
-  }
-
   private getPendingInterceptors(): string[] {
     if (nock.isDone()) return [];
-    return unique(nock.pendingMocks());
+    return nock.pendingMocks();
   }
 
 }

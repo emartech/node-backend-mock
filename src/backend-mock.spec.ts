@@ -4,6 +4,12 @@ import { expect } from 'chai';
 
 import axios from 'axios';
 
+const unresolvedInterceptors = (str: string) => {
+  return str
+    .split('\n')
+    .filter((value: string) => value.match(/http:\/\/localhost:80\//));
+};
+
 /* tslint:disable no-unused-expression */
 
 describe('Backend Mock', () => {
@@ -36,6 +42,25 @@ describe('Backend Mock', () => {
 
       const expectedMesssage = /GET http:\/\/localhost:80\/(.|\n)+POST http:\/\/localhost:80\//;
       expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
+    });
+
+    it('should throw exception message with exactly the same number of unresolved interceptors', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenGET()
+        .respondWith();
+
+      mock
+        .whenPOST()
+        .respondWith();
+
+      try {
+        mock.clean();
+      } catch (exception) {
+        expect(unresolvedInterceptors((exception as Error).message)).to.have.length(2);
+      }
     });
 
     it('should reset interceptors', async () => {
