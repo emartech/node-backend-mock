@@ -1,4 +1,4 @@
-import { isFunction, isEmpty, not, unique, matchObjects } from './utils';
+import { isFunction, isEmpty, not, unique, matchObjects, add, set } from './utils';
 import { expect } from 'chai';
 
 describe('Utils', () => {
@@ -124,6 +124,84 @@ describe('Utils', () => {
     it('should return false if matched object has same fields with different values', () => {
       const result = matchObjects({ field: 'value', extra: false })({ field: 'value', extra: true });
       expect(result).to.eql(false);
+    });
+
+  });
+
+  context('#add', () => {
+
+    it('should add an element to given empty array', () => {
+      const array = [] as any[];
+      const element = { data: true };
+      const result = add(array)(element);
+      expect(result).to.eql([element]);
+    });
+
+    it('should add new element to the end of given array', () => {
+      const array = [{ data: false }];
+      const element = { data: true };
+      const result = add(array)(element);
+      expect(result).to.eql([{ data: false }, element]);
+    });
+
+  });
+
+  context('#set', () => {
+
+    it('should return given array if empty array and zero index given', () => {
+      const array = [] as any[];
+      const index = 0;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql(array);
+    });
+
+    it('should return given array if too large index given', () => {
+      const array = [{ data: false }] as any[];
+      const index = 10;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql(array);
+    });
+
+    it('should return given array if too small index given', () => {
+      const array = [{ data: false }] as any[];
+      const index = -1;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql(array);
+    });
+
+    it('should reset element if array with only element given with the right index', () => {
+      const array = [{ data: false }] as any[];
+      const index = 0;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql([element]);
+    });
+
+    it('should reset element if array with many elements given with the right index', () => {
+      const array = [{ data: true }, { data: false }, { data: true }] as any[];
+      const index = 1;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql([element, element, element]);
+    });
+
+    it('should reset element if array with many elements given with the head index', () => {
+      const array = [{ data: false }, { data: true }, { data: true }] as any[];
+      const index = 0;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql([element, element, element]);
+    });
+
+    it('should reset element if array with many elements given with the last index', () => {
+      const array = [{ data: true }, { data: true }, { data: false }] as any[];
+      const index = 2;
+      const element = { data: true };
+      const result = set(array)(index)(element);
+      expect(result).to.eql([element, element, element]);
     });
 
   });

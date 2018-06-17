@@ -27,3 +27,12 @@ export const matchObjects = <T extends U, U extends IndexableObject>(matched: T)
     return Object.keys(target).includes(field) && matched[field] === target[field];
   });
 };
+
+export const add = <T>(array: T[]) => (value: T): T[] => {
+  return [...array, value];
+};
+
+export const set = <T>(array: T[]) => (index: number) => (value: T): T[] => {
+  if (array.length <= index || index < 0) return array;
+  return [...array.slice(0, index), value, ...array.slice(index + 1, array.length)];
+};
