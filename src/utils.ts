@@ -30,3 +30,11 @@ export const set = <T>(array: T[]) => (index: number) => (value: T): T[] => {
   if (array.length <= index || index < 0) return array;
   return [...array.slice(0, index), value, ...array.slice(index + 1, array.length)];
 };
+
+export const range = (length: number): number[] => {
+  const array = [] as number[];
+  for (let i = 0; i < length; i++) {
+    array.push(i);
+  }
+  return array;
+};

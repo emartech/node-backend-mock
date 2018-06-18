@@ -1,4 +1,4 @@
-import { isFunction, isEmpty, not, matchObjects, add, set } from './utils';
+import { isFunction, isEmpty, not, matchObjects, add, set, range } from './utils';
 import { expect } from 'chai';
 
 describe('Utils', () => {
@@ -183,6 +183,20 @@ describe('Utils', () => {
       const element = { data: true };
       const result = set(array)(index)(element);
       expect(result).to.eql([element, element, element]);
+    });
+
+  });
+
+  context('#range', () => {
+
+    it('should return zero length array if zero given', () => {
+      const result = range(0);
+      expect(result).to.have.length(0);
+    });
+
+    it('should return N length array if N given', () => {
+      const result = range(5);
+      expect(result).to.have.length(5);
     });
 
   });
