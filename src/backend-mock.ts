@@ -1,10 +1,8 @@
 import { Host, Path, Query, StatusCode, Body, InterceptorDescription } from './interceptor-description';
 import { InterceptorDescriptionRegistry } from './interceptor-description-registry';
-import { registerInterceptor } from './register-interceptor';
 import { BackendMockError } from './backend-mock-error';
+import { NockWrapper } from './nock-wrapper';
 import { isEmpty, not } from './utils';
-
-import nock from 'nock';
 
 export interface RequestOptions {
   path?: Path;
@@ -24,10 +22,12 @@ export class BackendMock {
   }
 
   private _registry: InterceptorDescriptionRegistry;
+  private _nockWrapper: NockWrapper;
   private _host: Host;
 
   constructor(host: Host) {
     this._registry = new InterceptorDescriptionRegistry();
+    this._nockWrapper = new NockWrapper();
     this._host = host;
   }
 
@@ -102,29 +102,24 @@ export class BackendMock {
 
   public respondWith({ statusCode = 200, body = {} }: ResponseOptions = {}): void {
     for (const { index, description } of this._registry.getUnregistereds()) {
-      registerInterceptor(
-        description
-          .setResponseStatusCode(statusCode)
-          .setResponseBody(body));
+      const interceptorDescription = description
+        .setResponseStatusCode(statusCode)
+        .setResponseBody(body);
 
+      this._nockWrapper.registerInterceptor(interceptorDescription);
       this._registry.registerDescription(index);
     }
   }
 
   public clean(): void {
-    const pendingInterceptors = this.getPendingInterceptors();
+    const pendingInterceptors = this._nockWrapper.getPendingInterceptors();
 
     this._registry.clear();
-    nock.cleanAll();
+    this._nockWrapper.releaseInterceptors();
 
     if (not(isEmpty(pendingInterceptors))) {
       throw new BackendMockError(pendingInterceptors);
     }
-  }
-
-  private getPendingInterceptors(): string[] {
-    if (nock.isDone()) return [];
-    return nock.pendingMocks();
   }
 
 }

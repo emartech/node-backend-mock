@@ -1,4 +1,4 @@
-import nock from 'nock';
+import { Options } from './nock-wrapper';
 
 export type Host = string;
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
@@ -20,7 +20,7 @@ export class InterceptorDescription {
   private _requestBody: Body = {};
   private _responseStatusCode: StatusCode = 200;
   private _responseBody: Body = {};
-  private _options: nock.Options = {
+  private _options: Options = {
     allowUnmocked: false,
     badheaders: [],
   };
@@ -57,7 +57,7 @@ export class InterceptorDescription {
     return this._responseBody;
   }
 
-  public get options(): nock.Options {
+  public get options(): Options {
     return this._options;
   }
 
