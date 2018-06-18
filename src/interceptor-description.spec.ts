@@ -77,6 +77,16 @@ describe('Interceptor Description', () => {
 
     });
 
+    context('@responseRepeat', () => {
+
+      it('should return 0 as default responseRepeat value', () => {
+        const description = new InterceptorDescription(HOST);
+        const result = description.responseRepeat;
+        expect(result).to.eql(0);
+      });
+
+    });
+
     context('@options', () => {
 
       it('should return default options value', () => {
@@ -147,6 +157,16 @@ describe('Interceptor Description', () => {
         const description = new InterceptorDescription(HOST);
         description.setResponseBody({ data: {} });
         expect(description.responseBody).to.eql({ data: {} });
+      });
+
+    });
+
+    context('#setResponseRepeat', () => {
+
+      it('should set given response repeat', () => {
+        const description = new InterceptorDescription(HOST);
+        description.setResponseRepeat(5);
+        expect(description.responseRepeat).to.eql(5);
       });
 
     });

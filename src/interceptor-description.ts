@@ -20,6 +20,7 @@ export class InterceptorDescription {
   private _requestBody: Body = {};
   private _responseStatusCode: StatusCode = 200;
   private _responseBody: Body = {};
+  private _responseRepeat: number = 0;
   private _options: Options = {
     allowUnmocked: false,
     badheaders: [],
@@ -57,6 +58,10 @@ export class InterceptorDescription {
     return this._responseBody;
   }
 
+  public get responseRepeat(): number {
+    return this._responseRepeat;
+  }
+
   public get options(): Options {
     return this._options;
   }
@@ -88,6 +93,11 @@ export class InterceptorDescription {
 
   public setResponseBody(responseBody: Body): InterceptorDescription {
     this._responseBody = responseBody;
+    return this;
+  }
+
+  public setResponseRepeat(responseRepeat: number): InterceptorDescription {
+    this._responseRepeat = responseRepeat;
     return this;
   }
 

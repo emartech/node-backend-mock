@@ -102,11 +102,12 @@ export class BackendMock {
 
   public respondWith({ statusCode = 200, body = {} }: ResponseOptions = {}): void {
     for (const { index, description } of this._registry.getUnregistereds()) {
-      const interceptorDescription = description
+
+      description
         .setResponseStatusCode(statusCode)
         .setResponseBody(body);
 
-      this._nockWrapper.registerInterceptor(interceptorDescription);
+      this._nockWrapper.registerInterceptor(description);
       this._registry.registerDescription(index);
     }
   }
