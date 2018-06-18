@@ -11,6 +11,7 @@ export class NockWrapper {
     nock(description.host, description.options)
       .intercept(description.path, description.method, matchObjects(description.requestBody))
       .query(matchObjects(description.query))
+      .times(description.responseRepeat)
       .reply(description.responseStatusCode, description.responseBody);
   }
 

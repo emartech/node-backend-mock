@@ -13,6 +13,7 @@ export interface RequestOptions {
 export interface ResponseOptions {
   statusCode?: StatusCode;
   body?: Body;
+  repeat?: number;
 }
 
 export class BackendMock {
@@ -100,12 +101,13 @@ export class BackendMock {
     return this;
   }
 
-  public respondWith({ statusCode = 200, body = {} }: ResponseOptions = {}): void {
+  public respondWith({ statusCode = 200, body = {}, repeat = 0 }: ResponseOptions = {}): void {
     for (const { index, description } of this._registry.getUnregistereds()) {
 
       description
         .setResponseStatusCode(statusCode)
-        .setResponseBody(body);
+        .setResponseBody(body)
+        .setResponseRepeat(repeat);
 
       this._nockWrapper.registerInterceptor(description);
       this._registry.registerDescription(index);

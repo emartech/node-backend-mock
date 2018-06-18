@@ -1,4 +1,5 @@
 import { BackendMock } from './backend-mock';
+import { range } from './utils';
 import { expect } from 'chai';
 
 import axios from 'axios';
@@ -161,6 +162,22 @@ describe('Backend Mock', () => {
       const response = await axios.put(host, { ...requestBody, extra: 'value' });
 
       expect(response).to.not.undefined;
+
+      mock.clean();
+    });
+
+    it('should respond as many times as repeat count given', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+      const repeat = 10;
+
+      mock
+        .whenPUT()
+        .respondWith({ repeat });
+
+      for (const _ of range(repeat)) {
+        await axios.put(host);
+      }
 
       mock.clean();
     });
