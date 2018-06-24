@@ -63,6 +63,15 @@ describe('Backend Mock', () => {
       }
     });
 
+    it('should not throw exception message if interceptor is unregistered', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock.whenGET();
+
+      mock.clean();
+    });
+
     it('should reset interceptors', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
