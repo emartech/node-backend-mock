@@ -1,116 +1,72 @@
-import { Host, Path, Query, StatusCode, Body, InterceptorDescription } from './interceptor-description';
-import { InterceptorDescriptionRegistry } from './interceptor-description-registry';
+import { ResponseOptions } from './interceptor-response-options';
+import { RequestOptions } from './interceptor-request-options';
+import { InterceptorRegistry } from './interceptor-registry';
+import { InterceptorFactory } from './interceptor-factory';
+import { InterceptorStatus } from './interceptor';
 import { BackendMockError } from './backend-mock-error';
 import { NockWrapper } from './nock-wrapper';
 import { isEmpty, not } from './utils';
 
-export interface RequestOptions {
-  path?: Path;
-  query?: Query;
-  body?: Body;
-}
-
-export interface ResponseOptions {
-  statusCode?: StatusCode;
-  body?: Body;
-  repeat?: number;
-}
-
 export class BackendMock {
 
-  public static createFor(host: Host): BackendMock {
+  public static createFor(host: string): BackendMock {
     return new BackendMock(host);
   }
 
-  private _registry: InterceptorDescriptionRegistry;
+  private _registry: InterceptorRegistry;
   private _nockWrapper: NockWrapper;
-  private _host: Host;
+  private _host: string;
 
-  constructor(host: Host) {
-    this._registry = new InterceptorDescriptionRegistry();
+  constructor(host: string) {
+    this._registry = new InterceptorRegistry();
     this._nockWrapper = new NockWrapper();
     this._host = host;
   }
 
-  public whenGET({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
-    this._registry.addDescription(
-      InterceptorDescription
-        .createFor(this._host)
-        .setMethod('GET')
-        .setPath(path)
-        .setQuery(query));
-
+  public whenGET(requestOptions: RequestOptions = {}): BackendMock {
+    const interceptor = InterceptorFactory.createForGET(this._host, requestOptions);
+    this._registry.addInterceptor(interceptor);
     return this;
   }
 
-  public whenPOST({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
-    this._registry.addDescription(
-      InterceptorDescription
-        .createFor(this._host)
-        .setMethod('POST')
-        .setPath(path)
-        .setQuery(query)
-        .setRequestBody(body));
-
+  public whenPOST(requestOptions: RequestOptions = {}): BackendMock {
+    const interceptor = InterceptorFactory.createForPOST(this._host, requestOptions);
+    this._registry.addInterceptor(interceptor);
     return this;
   }
 
-  public whenPUT({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
-    this._registry.addDescription(
-      InterceptorDescription
-        .createFor(this._host)
-        .setMethod('PUT')
-        .setPath(path)
-        .setQuery(query)
-        .setRequestBody(body));
-
+  public whenPUT(requestOptions: RequestOptions = {}): BackendMock {
+    const interceptor = InterceptorFactory.createForPUT(this._host, requestOptions);
+    this._registry.addInterceptor(interceptor);
     return this;
   }
 
-  public whenPATCH({ path = '/', query = {}, body = {} }: RequestOptions = {}): BackendMock {
-    this._registry.addDescription(
-      InterceptorDescription
-        .createFor(this._host)
-        .setMethod('PATCH')
-        .setPath(path)
-        .setQuery(query)
-        .setRequestBody(body));
-
+  public whenPATCH(requestOptions: RequestOptions = {}): BackendMock {
+    const interceptor = InterceptorFactory.createForPATCH(this._host, requestOptions);
+    this._registry.addInterceptor(interceptor);
     return this;
   }
 
-  public whenDELETE({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
-    this._registry.addDescription(
-      InterceptorDescription
-        .createFor(this._host)
-        .setMethod('DELETE')
-        .setPath(path)
-        .setQuery(query));
-
+  public whenDELETE(requestOptions: RequestOptions = {}): BackendMock {
+    const interceptor = InterceptorFactory.createForDELETE(this._host, requestOptions);
+    this._registry.addInterceptor(interceptor);
     return this;
   }
 
-  public whenHEAD({ path = '/', query = {} }: RequestOptions = {}): BackendMock {
-    this._registry.addDescription(
-      InterceptorDescription
-        .createFor(this._host)
-        .setMethod('HEAD')
-        .setPath(path)
-        .setQuery(query));
-
+  public whenHEAD(requestOptions: RequestOptions = {}): BackendMock {
+    const interceptor = InterceptorFactory.createForHEAD(this._host, requestOptions);
+    this._registry.addInterceptor(interceptor);
     return this;
   }
 
-  public respondWith({ statusCode = 200, body = {}, repeat = 0 }: ResponseOptions = {}): void {
-    for (const { index, description } of this._registry.getUnregistereds()) {
+  public respondWith(responseOptions: ResponseOptions = {}): void {
+    for (const interceptor of this._registry.unregistereds) {
 
-      description
-        .setResponseStatusCode(statusCode)
-        .setResponseBody(body)
-        .setResponseRepeat(repeat);
+      interceptor
+        .setResponseOptions(responseOptions)
+        .setStatus(InterceptorStatus.REGISTERED);
 
-      this._nockWrapper.registerInterceptor(description);
-      this._registry.registerDescription(index);
+      this._nockWrapper.registerInterceptor(interceptor);
     }
   }
 

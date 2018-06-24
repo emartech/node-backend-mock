@@ -1,4 +1,4 @@
-import { InterceptorDescription } from './interceptor-description';
+import { Interceptor } from './interceptor';
 import { matchObjects } from './utils';
 
 import nock from 'nock';
@@ -7,12 +7,12 @@ export { Options } from 'nock';
 
 export class NockWrapper {
 
-  public registerInterceptor(description: InterceptorDescription): void {
-    nock(description.host, description.options)
-      .intercept(description.path, description.method, matchObjects(description.requestBody))
-      .query(matchObjects(description.query))
-      .times(description.responseRepeat)
-      .reply(description.responseStatusCode, description.responseBody);
+  public registerInterceptor({ host, settings, requestOptions, responseOptions }: Interceptor): void {
+    nock(host, settings)
+      .intercept(requestOptions.path, requestOptions.method, matchObjects(requestOptions.body))
+      .query(matchObjects(requestOptions.query))
+      .times(responseOptions.repeat)
+      .reply(responseOptions.statusCode, responseOptions.body);
   }
 
   public releaseInterceptors(): void {
