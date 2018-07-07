@@ -45,7 +45,7 @@ describe('Utils', () => {
     });
 
     it('should return false if given array has elements', () => {
-      const result = isEmpty([1, 2, 3]);
+      const result = isEmpty([1, 2, 3]); // tslint:disable-line no-magic-numbers
       expect(result).to.eql(false);
     });
 
@@ -195,8 +195,9 @@ describe('Utils', () => {
     });
 
     it('should return N length array if N given', () => {
-      const result = range(5);
-      expect(result).to.have.length(5);
+      const rangeSize = 5;
+      const result = range(rangeSize);
+      expect(result).to.have.length(rangeSize);
     });
 
   });

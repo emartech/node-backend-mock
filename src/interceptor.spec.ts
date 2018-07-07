@@ -1,6 +1,7 @@
 import { InterceptorResponseOptions } from './interceptor-response-options';
 import { InterceptorRequestOptions } from './interceptor-request-options';
 import { Interceptor, InterceptorStatus } from './interceptor';
+import { HttpStatusCodes } from './http-status-codes';
 import { expect } from 'chai';
 
 const HOST = 'http://localhost';
@@ -99,13 +100,14 @@ describe('Interceptor', () => {
   context('#setResponseOptions', () => {
 
     it('should set response options', () => {
+      const responseRepeats = 10;
       const expectedResponseOptions = new InterceptorResponseOptions();
       const interceptor = new Interceptor(HOST);
 
       expectedResponseOptions
-        .setStatusCode(500)
+        .setStatusCode(HttpStatusCodes.INTERNAL_SERVER_ERROR)
         .setBody({ data: {} })
-        .setRepeat(10);
+        .setRepeat(responseRepeats);
 
       interceptor.setResponseOptions(expectedResponseOptions);
 

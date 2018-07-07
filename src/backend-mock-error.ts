@@ -4,7 +4,7 @@ import { isFunction } from './utils';
 
 export class BackendMockError extends Error {
 
-  constructor(interceptors: string[]) {
+  public constructor(interceptors: string[]) {
     super(getExceptionMessage(interceptors));
     this.name = this.constructor.name;
 

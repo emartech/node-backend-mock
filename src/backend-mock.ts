@@ -23,7 +23,7 @@ export class BackendMock {
   private _nockWrapper: NockWrapper;
   private _host: string;
 
-  constructor(host: string) {
+  public constructor(host: string) {
     this._registry = new InterceptorRegistry();
     this._nockWrapper = new NockWrapper();
     this._host = host;

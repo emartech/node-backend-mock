@@ -1,4 +1,5 @@
 import { InterceptorResponseOptions } from './interceptor-response-options';
+import { HttpStatusCodes } from './http-status-codes';
 import { expect } from 'chai';
 
 describe('Interceptor Response Options', () => {
@@ -10,7 +11,7 @@ describe('Interceptor Response Options', () => {
       it('should return ok as default status code value', () => {
         const description = new InterceptorResponseOptions();
         const result = description.statusCode;
-        expect(result).to.eql(200);
+        expect(result).to.eql(HttpStatusCodes.OK);
       });
 
     });
@@ -43,8 +44,8 @@ describe('Interceptor Response Options', () => {
 
       it('should set given response status code', () => {
         const description = new InterceptorResponseOptions();
-        description.setStatusCode(401);
-        expect(description.statusCode).to.eql(401);
+        description.setStatusCode(HttpStatusCodes.UNAUTHORIZED);
+        expect(description.statusCode).to.eql(HttpStatusCodes.UNAUTHORIZED);
       });
 
     });
@@ -62,9 +63,12 @@ describe('Interceptor Response Options', () => {
     context('#setRepeat', () => {
 
       it('should set given response repeat', () => {
+        const expectedRepeats = 5;
         const description = new InterceptorResponseOptions();
-        description.setRepeat(5);
-        expect(description.repeat).to.eql(5);
+
+        description.setRepeat(expectedRepeats);
+
+        expect(description.repeat).to.eql(expectedRepeats);
       });
 
     });

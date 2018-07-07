@@ -45,6 +45,7 @@ describe('Backend Mock', () => {
     });
 
     it('should throw exception message with exactly the same number of unresolved interceptors', async () => {
+      const expectedUnresolvedInterceptors = 2;
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
@@ -59,7 +60,7 @@ describe('Backend Mock', () => {
       try {
         mock.clean();
       } catch (exception) {
-        expect(unresolvedInterceptors((exception as Error).message)).to.have.length(2);
+        expect(unresolvedInterceptors((exception as Error).message)).to.have.length(expectedUnresolvedInterceptors);
       }
     });
 

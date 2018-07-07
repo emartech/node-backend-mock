@@ -1,5 +1,8 @@
 import { InterceptorRequestOptions, RequestOptions } from './interceptor-request-options';
 import { InterceptorResponseOptions, ResponseOptions } from './interceptor-response-options';
+import { HttpStatusCodes } from './http-status-codes';
+
+/* tslint:disable max-line-length */
 
 export interface InterceptorSettings {
   allowUnmocked: boolean;
@@ -22,7 +25,7 @@ export class Interceptor {
   private _responseOptions: InterceptorResponseOptions;
   private _status: InterceptorStatus;
 
-  constructor(host: string, settings: InterceptorSettings = { allowUnmocked: false }) {
+  public constructor(host: string, settings: InterceptorSettings = { allowUnmocked: false }) {
     this._host = host;
     this._settings = settings;
     this._requestOptions = new InterceptorRequestOptions();
@@ -65,7 +68,7 @@ export class Interceptor {
     return this;
   }
 
-  public setResponseOptions({ statusCode = 200, body = {}, repeat = 0 }: ResponseOptions = {}): Interceptor {
+  public setResponseOptions({ statusCode = HttpStatusCodes.OK, body = {}, repeat = 0 }: ResponseOptions = {}): Interceptor {
     this._responseOptions
       .setStatusCode(statusCode)
       .setBody(body)

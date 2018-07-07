@@ -45,7 +45,7 @@ describe('Interceptor Factory', () => {
     });
 
     it('should override given request method', () => {
-      const interceptor = createInterceptorWith(expectedAction)(HOST, { method: 'ANY' } as any);
+      const interceptor = createInterceptorWith(expectedAction)(HOST, { method: 'OTHER' } as any);
       expect(interceptor.requestOptions.method).to.eql(expectedMethod);
     });
 
