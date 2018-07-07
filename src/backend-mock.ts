@@ -1,11 +1,17 @@
 import { ResponseOptions } from './interceptor-response-options';
-import { RequestOptions } from './interceptor-request-options';
 import { InterceptorRegistry } from './interceptor-registry';
 import { InterceptorFactory } from './interceptor-factory';
-import { InterceptorStatus } from './interceptor';
 import { BackendMockError } from './backend-mock-error';
+import { Path } from './interceptor-request-options';
+import { InterceptorStatus } from './interceptor';
 import { NockWrapper } from './nock-wrapper';
 import { isEmpty, not } from './utils';
+
+export interface RequestOptions {
+  path?: Path;
+  query?: object;
+  body?: object;
+}
 
 export class BackendMock {
 
