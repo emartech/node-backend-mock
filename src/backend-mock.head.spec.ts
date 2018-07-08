@@ -2,7 +2,7 @@ import { BackendMock } from './backend-mock';
 import { range } from './utils';
 import { expect } from 'chai';
 
-import axios from 'axios';
+import Axios from 'axios';
 
 /* tslint:disable no-unused-expression */
 
@@ -18,7 +18,7 @@ describe('Backend Mock', () => {
         .whenHEAD()
         .respondWith();
 
-      const response = await axios.head(host);
+      const response = await Axios.head(host);
 
       expect(response).to.not.undefined;
 
@@ -33,7 +33,7 @@ describe('Backend Mock', () => {
         .whenHEAD()
         .respondWith();
 
-      const response = await axios.head(host);
+      const response = await Axios.head(host);
 
       expect(response).to.not.undefined;
 
@@ -49,7 +49,7 @@ describe('Backend Mock', () => {
         .whenHEAD({ path })
         .respondWith();
 
-      const response = await axios.head(`${host}${path}`);
+      const response = await Axios.head(`${host}${path}`);
 
       expect(response).to.not.undefined;
 
@@ -65,7 +65,7 @@ describe('Backend Mock', () => {
         .whenHEAD({ path: /test$/ })
         .respondWith();
 
-      const response = await axios.head(`${host}${path}`);
+      const response = await Axios.head(`${host}${path}`);
 
       expect(response).to.not.undefined;
 
@@ -80,7 +80,7 @@ describe('Backend Mock', () => {
         .whenHEAD({ query: { param: 'value' } })
         .respondWith();
 
-      const response = await axios.head(`${host}?param=value`);
+      const response = await Axios.head(`${host}?param=value`);
 
       expect(response).to.not.undefined;
 
@@ -95,7 +95,7 @@ describe('Backend Mock', () => {
         .whenHEAD({ query: { param: 'value' } })
         .respondWith();
 
-      const response = await axios.head(`${host}?param=value&extra=true`);
+      const response = await Axios.head(`${host}?param=value&extra=true`);
 
       expect(response).to.not.undefined;
 
@@ -111,7 +111,7 @@ describe('Backend Mock', () => {
         .whenHEAD()
         .respondWith({ statusCode: expectedStatus });
 
-      const { status } = await axios.head(host);
+      const { status } = await Axios.head(host);
 
       expect(status).to.eql(expectedStatus);
 
@@ -127,7 +127,7 @@ describe('Backend Mock', () => {
         .whenHEAD()
         .respondWith({ body: expectedBody });
 
-      const { data } = await axios.head(host);
+      const { data } = await Axios.head(host);
 
       expect(data).to.eql(expectedBody);
 
@@ -144,7 +144,7 @@ describe('Backend Mock', () => {
         .respondWith({ repeat });
 
       for (const _ of range(repeat)) {
-        await axios.head(host);
+        await Axios.head(host);
       }
 
       mock.clean();

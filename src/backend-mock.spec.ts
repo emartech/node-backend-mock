@@ -2,13 +2,11 @@ import { BackendMockError } from './backend-mock-error';
 import { BackendMock } from './backend-mock';
 import { expect } from 'chai';
 
-import axios from 'axios';
+import Axios from 'axios';
 
-const unresolvedInterceptors = (str: string) => {
-  return str
-    .split('\n')
-    .filter((value: string) => value.match(/http:\/\/localhost:80\//));
-};
+const unresolvedInterceptors = (str: string) => str
+  .split('\n')
+  .filter((value: string) => value.match(/http:\/\/localhost:80\//));
 
 /* tslint:disable no-unused-expression */
 
@@ -81,7 +79,7 @@ describe('Backend Mock', () => {
         .whenGET()
         .respondWith();
 
-      await axios.get(host);
+      await Axios.get(host);
       mock.clean();
 
       mock

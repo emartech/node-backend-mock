@@ -16,7 +16,7 @@ export interface RequestOptions {
 export class BackendMock {
 
   public static createFor(host: string): BackendMock {
-    return new BackendMock(host);
+      return new BackendMock(host);
   }
 
   private _registry: InterceptorRegistry;

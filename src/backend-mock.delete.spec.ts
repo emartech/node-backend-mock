@@ -2,7 +2,7 @@ import { BackendMock } from './backend-mock';
 import { range } from './utils';
 import { expect } from 'chai';
 
-import axios from 'axios';
+import Axios from 'axios';
 
 /* tslint:disable no-unused-expression */
 
@@ -18,7 +18,7 @@ describe('Backend Mock', () => {
         .whenDELETE()
         .respondWith();
 
-      const response = await axios.delete(host);
+      const response = await Axios.delete(host);
 
       expect(response).to.not.undefined;
 
@@ -33,7 +33,7 @@ describe('Backend Mock', () => {
         .whenDELETE()
         .respondWith();
 
-      const response = await axios.delete(host);
+      const response = await Axios.delete(host);
 
       expect(response).to.not.undefined;
 
@@ -49,7 +49,7 @@ describe('Backend Mock', () => {
         .whenDELETE({ path })
         .respondWith();
 
-      const response = await axios.delete(`${host}${path}`);
+      const response = await Axios.delete(`${host}${path}`);
 
       expect(response).to.not.undefined;
 
@@ -65,7 +65,7 @@ describe('Backend Mock', () => {
         .whenDELETE({ path: /test$/ })
         .respondWith();
 
-      const response = await axios.delete(`${host}${path}`);
+      const response = await Axios.delete(`${host}${path}`);
 
       expect(response).to.not.undefined;
 
@@ -80,7 +80,7 @@ describe('Backend Mock', () => {
         .whenDELETE({ query: { param: 'value' } })
         .respondWith();
 
-      const response = await axios.delete(`${host}?param=value`);
+      const response = await Axios.delete(`${host}?param=value`);
 
       expect(response).to.not.undefined;
 
@@ -95,7 +95,7 @@ describe('Backend Mock', () => {
         .whenDELETE({ query: { param: 'value' } })
         .respondWith();
 
-      const response = await axios.delete(`${host}?param=value&extra=true`);
+      const response = await Axios.delete(`${host}?param=value&extra=true`);
 
       expect(response).to.not.undefined;
 
@@ -111,7 +111,7 @@ describe('Backend Mock', () => {
         .whenDELETE()
         .respondWith({ statusCode: expectedStatus });
 
-      const { status } = await axios.delete(host);
+      const { status } = await Axios.delete(host);
 
       expect(status).to.eql(expectedStatus);
 
@@ -127,7 +127,7 @@ describe('Backend Mock', () => {
         .whenDELETE()
         .respondWith({ body: expectedBody });
 
-      const { data } = await axios.delete(host);
+      const { data } = await Axios.delete(host);
 
       expect(data).to.eql(expectedBody);
 
@@ -144,7 +144,7 @@ describe('Backend Mock', () => {
         .respondWith({ repeat });
 
       for (const _ of range(repeat)) {
-        await axios.delete(host);
+        await Axios.delete(host);
       }
 
       mock.clean();

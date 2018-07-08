@@ -2,7 +2,7 @@ import { BackendMock } from './backend-mock';
 import { range } from './utils';
 import { expect } from 'chai';
 
-import axios from 'axios';
+import Axios from 'axios';
 
 /* tslint:disable no-unused-expression */
 
@@ -18,7 +18,7 @@ describe('Backend Mock', () => {
         .whenPUT()
         .respondWith();
 
-      const response = await axios.put(host);
+      const response = await Axios.put(host);
 
       expect(response).to.not.undefined;
 
@@ -33,7 +33,7 @@ describe('Backend Mock', () => {
         .whenPUT()
         .respondWith();
 
-      const response = await axios.put(host);
+      const response = await Axios.put(host);
 
       expect(response).to.not.undefined;
 
@@ -49,7 +49,7 @@ describe('Backend Mock', () => {
         .whenPUT({ path })
         .respondWith();
 
-      const response = await axios.put(`${host}${path}`);
+      const response = await Axios.put(`${host}${path}`);
 
       expect(response).to.not.undefined;
 
@@ -65,7 +65,7 @@ describe('Backend Mock', () => {
         .whenPUT({ path: /test$/ })
         .respondWith();
 
-      const response = await axios.put(`${host}${path}`);
+      const response = await Axios.put(`${host}${path}`);
 
       expect(response).to.not.undefined;
 
@@ -80,7 +80,7 @@ describe('Backend Mock', () => {
         .whenPUT({ query: { param: 'value' } })
         .respondWith();
 
-      const response = await axios.put(`${host}?param=value`);
+      const response = await Axios.put(`${host}?param=value`);
 
       expect(response).to.not.undefined;
 
@@ -95,7 +95,7 @@ describe('Backend Mock', () => {
         .whenPUT({ query: { param: 'value' } })
         .respondWith();
 
-      const response = await axios.put(`${host}?param=value&extra=true`);
+      const response = await Axios.put(`${host}?param=value&extra=true`);
 
       expect(response).to.not.undefined;
 
@@ -111,7 +111,7 @@ describe('Backend Mock', () => {
         .whenPUT()
         .respondWith({ statusCode: expectedStatus });
 
-      const { status } = await axios.put(host);
+      const { status } = await Axios.put(host);
 
       expect(status).to.eql(expectedStatus);
 
@@ -127,7 +127,7 @@ describe('Backend Mock', () => {
         .whenPUT()
         .respondWith({ body: expectedBody });
 
-      const { data } = await axios.put(host);
+      const { data } = await Axios.put(host);
 
       expect(data).to.eql(expectedBody);
 
@@ -143,7 +143,7 @@ describe('Backend Mock', () => {
         .whenPUT({ body: requestBody })
         .respondWith();
 
-      const response = await axios.put(host, requestBody);
+      const response = await Axios.put(host, requestBody);
 
       expect(response).to.not.undefined;
 
@@ -159,7 +159,7 @@ describe('Backend Mock', () => {
         .whenPUT({ body: requestBody })
         .respondWith();
 
-      const response = await axios.put(host, { ...requestBody, extra: 'value' });
+      const response = await Axios.put(host, { ...requestBody, extra: 'value' });
 
       expect(response).to.not.undefined;
 
@@ -176,7 +176,7 @@ describe('Backend Mock', () => {
         .respondWith({ repeat });
 
       for (const _ of range(repeat)) {
-        await axios.put(host);
+        await Axios.put(host);
       }
 
       mock.clean();
