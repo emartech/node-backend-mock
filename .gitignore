@@ -4,6 +4,7 @@ typings/
 dist/
 .vscode/
 .idea/
+.tmp/
 
 # Patterns
 **/*.log
