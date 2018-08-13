@@ -1,6 +1,6 @@
 {
   "name": "@emartech/backend-mock",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Helper library for backend mocking and integration testing based on nock package.",
   "keywords": [
     "backend",
