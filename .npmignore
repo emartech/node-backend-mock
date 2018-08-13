@@ -16,6 +16,6 @@ typings/
 .npmignore
 .npmrc
 .nvmrc
-package-lock.json
+nycconfig.json
 tsconfig.json
 tslint.json
