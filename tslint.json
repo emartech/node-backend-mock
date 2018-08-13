@@ -26,7 +26,7 @@
     "match-default-export-name": [true],
     "file-name-casing": [true, "kebab-case"],
     "switch-final-break": [true, "always"],
-    "no-implicit-dependencies": [true],
+    "no-implicit-dependencies": [true, "dev"],
     "max-classes-per-file": [true, 1],
     "max-line-length": [true, 120],
     "member-access": [true, "check-accessor", "check-constructor", "check-parameter-property"],
