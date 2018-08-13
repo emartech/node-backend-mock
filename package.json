@@ -30,7 +30,7 @@
   "config": {},
   "dependencies": {
     "@types/nock": "9.3.0",
-    "nock": "9.4.1"
+    "nock": "9.6.1"
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
