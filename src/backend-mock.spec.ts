@@ -12,7 +12,7 @@ const unresolvedInterceptors = (str: string) => str
 
 describe('Backend Mock', () => {
 
-  context('#clean', () => {
+  context('#verifyAndRestore', () => {
 
     it('should throw exception if there is an unresovled interceptor', async () => {
       const host = 'http://localhost';
