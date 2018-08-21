@@ -25,7 +25,7 @@
     "init": "npm doctor && npm prune && npm ci --update-binary",
     "build": "rm -rf ./dist && tsc --project ./config/tsconfig.build.json",
     "test": "TS_NODE_PROJECT=./config/tsconfig.test.json mocha --opts .mocharc './src/**/*.spec.ts'",
-    "test:coverage": "nyc --nycrc-path ./nycconfig.json npm test"
+    "test:coverage": "nyc --nycrc-path ./config/nycconfig.json npm test"
   },
   "config": {},
   "dependencies": {
