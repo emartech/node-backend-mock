@@ -16,7 +16,7 @@ describe('Interceptor Registry', () => {
     });
 
     it('should return empty array if there is no unregistered interceptor', () => {
-      const registeredInterceptor = InterceptorFactory.createForGET(HOST, {});
+      const registeredInterceptor = InterceptorFactory.createForGET(HOST, undefined, {});
       registeredInterceptor.setStatus(InterceptorStatus.REGISTERED);
 
       const registry = new InterceptorRegistry();
@@ -26,7 +26,7 @@ describe('Interceptor Registry', () => {
     });
 
     it('should return unregistered interceptors', () => {
-      const unregisteredInterceptor = InterceptorFactory.createForGET(HOST, {});
+      const unregisteredInterceptor = InterceptorFactory.createForGET(HOST, undefined, {});
       unregisteredInterceptor.setStatus(InterceptorStatus.UNREGISTERED);
 
       const registry = new InterceptorRegistry();
@@ -40,7 +40,7 @@ describe('Interceptor Registry', () => {
   context('#addInterceptor', () => {
 
     it('should add given interceptor', () => {
-      const interceptor = InterceptorFactory.createForGET(HOST, {});
+      const interceptor = InterceptorFactory.createForGET(HOST, undefined, {});
 
       const registry = new InterceptorRegistry();
       registry.addInterceptor(interceptor);
@@ -53,7 +53,7 @@ describe('Interceptor Registry', () => {
   context('#clear', () => {
 
     it('should remove interceptors', () => {
-      const interceptor = InterceptorFactory.createForGET(HOST, {});
+      const interceptor = InterceptorFactory.createForGET(HOST, undefined, {});
 
       const registry = new InterceptorRegistry();
       registry.addInterceptor(interceptor);
