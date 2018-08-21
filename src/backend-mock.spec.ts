@@ -14,15 +14,15 @@ describe('Backend Mock', () => {
 
   context('#clean', () => {
 
-    it('should throw exception if there is unresovled interceptor', async () => {
+    it('should throw exception if there is an unresovled interceptor', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
       mock
-        .whenGET()
-        .respondWith();
+        .whenGET({ path: '/test' })
+        .respondWith({ statusCode: 200 });
 
-      const expectedMesssage = /GET http:\/\/localhost:80\//;
+      const expectedMesssage = /GET http:\/\/localhost:80\/test/;
       expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
     });
 
@@ -31,14 +31,27 @@ describe('Backend Mock', () => {
       const mock = BackendMock.createFor(host);
 
       mock
-        .whenGET()
-        .respondWith();
+        .whenGET({ path: '/test' })
+        .respondWith({ statusCode: 200 });
 
       mock
-        .whenPOST()
-        .respondWith();
+        .whenPOST({ path: '/test' })
+        .respondWith({ statusCode: 200 });
 
-      const expectedMesssage = /GET http:\/\/localhost:80\/(.|\n)+POST http:\/\/localhost:80\//;
+      const expectedMesssage = /GET http:\/\/localhost:80\/test(.|\n)+POST http:\/\/localhost:80\/test/;
+      expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
+    });
+
+    it('should throw exception if there are multiple unresovled batched interceptors', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenGET({ path: '/test' })
+        .whenPOST({ path: '/test' })
+        .respondWith({ statusCode: 200 });
+
+      const expectedMesssage = /GET http:\/\/localhost:80\/test(.|\n)+POST http:\/\/localhost:80\/test/;
       expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
     });
 
@@ -48,12 +61,9 @@ describe('Backend Mock', () => {
       const mock = BackendMock.createFor(host);
 
       mock
-        .whenGET()
-        .respondWith();
-
-      mock
-        .whenPOST()
-        .respondWith();
+        .whenGET({ path: '/test' })
+        .whenPOST({ path: '/test' })
+        .respondWith({ statusCode: 200 });
 
       try {
         mock.clean();
@@ -66,27 +76,26 @@ describe('Backend Mock', () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
-      mock.whenGET();
-
+      mock.whenGET({ path: '/test' });
       mock.clean();
     });
 
-    it('should reset interceptors', async () => {
+    it('should reset resolved interceptors', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
       mock
-        .whenGET()
-        .respondWith();
+        .whenGET({ path: '/test' })
+        .respondWith({ statusCode: 200 });
 
-      await Axios.get(host);
+      await Axios.get(`${host}/test`);
       mock.clean();
 
       mock
-        .whenPOST()
-        .respondWith();
+        .whenPOST({ path: '/test' })
+        .respondWith({ statusCode: 200 });
 
-      const expectedMesssage = /GET http:\/\/localhost:80\//;
+      const expectedMesssage = /GET http:\/\/localhost:80\/test/;
       expect(() => mock.clean()).to.not.throw(expectedMesssage);
     });
 
