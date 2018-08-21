@@ -22,7 +22,7 @@ describe('Backend Mock', () => {
 
       expect(response).to.not.undefined;
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond to the issued request on the specified host on https protocol', async () => {
@@ -37,7 +37,7 @@ describe('Backend Mock', () => {
 
       expect(response).to.not.undefined;
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond to the issued request on the specified host and given path', async () => {
@@ -53,7 +53,7 @@ describe('Backend Mock', () => {
 
       expect(response).to.not.undefined;
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond to the issued request on the specified host and matching path', async () => {
@@ -69,7 +69,7 @@ describe('Backend Mock', () => {
 
       expect(response).to.not.undefined;
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond to the issued request with expected query on the specified host', async () => {
@@ -84,7 +84,7 @@ describe('Backend Mock', () => {
 
       expect(response).to.not.undefined;
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond to the issued request with matching query on the specified host', async () => {
@@ -99,7 +99,7 @@ describe('Backend Mock', () => {
 
       expect(response).to.not.undefined;
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond with given status to the issued request on the specified host', async () => {
@@ -115,7 +115,7 @@ describe('Backend Mock', () => {
 
       expect(status).to.eql(expectedStatus);
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond with given body to the issued request on the specified host', async () => {
@@ -131,7 +131,7 @@ describe('Backend Mock', () => {
 
       expect(data).to.eql(expectedBody);
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should respond as many times as repeat count given', async () => {
@@ -147,7 +147,7 @@ describe('Backend Mock', () => {
         await Axios.head(host);
       }
 
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
   });

@@ -23,7 +23,7 @@ describe('Backend Mock', () => {
         .respondWith({ statusCode: 200 });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test/;
-      expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
+      expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
     });
 
     it('should throw exception if there are multiple unresovled interceptors', async () => {
@@ -39,7 +39,7 @@ describe('Backend Mock', () => {
         .respondWith({ statusCode: 200 });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test(.|\n)+POST http:\/\/localhost:80\/test/;
-      expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
+      expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
     });
 
     it('should throw exception if there are multiple unresovled batched interceptors', async () => {
@@ -52,7 +52,7 @@ describe('Backend Mock', () => {
         .respondWith({ statusCode: 200 });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test(.|\n)+POST http:\/\/localhost:80\/test/;
-      expect(() => mock.clean()).to.throw(BackendMockError, expectedMesssage);
+      expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
     });
 
     it('should throw exception message with exactly the same number of unresolved interceptors', async () => {
@@ -66,7 +66,7 @@ describe('Backend Mock', () => {
         .respondWith({ statusCode: 200 });
 
       try {
-        mock.clean();
+        mock.verifyAndRestore();
       } catch (exception) {
         expect(unresolvedInterceptors((exception as Error).message)).to.have.length(expectedUnresolvedInterceptors);
       }
@@ -85,7 +85,7 @@ describe('Backend Mock', () => {
         await Axios.get(`${host}/non-matching`);
       } catch (exception) {
         expect((exception as Error).message).to.match(/http:\/\/localhost\/non-matching/);
-        mock.clean();
+        mock.verifyAndRestore();
       }
     });
 
@@ -102,7 +102,7 @@ describe('Backend Mock', () => {
         await Axios.get(`${host}/non-matching`);
       } catch (exception) {
         expect((exception as Error).message).to.not.match(/http:\/\/localhost\/non-matching/);
-        mock.clean();
+        mock.verifyAndRestore();
       }
     });
 
@@ -111,7 +111,7 @@ describe('Backend Mock', () => {
       const mock = BackendMock.createFor(host);
 
       mock.whenGET({ path: '/test' });
-      mock.clean();
+      mock.verifyAndRestore();
     });
 
     it('should reset resolved interceptors', async () => {
@@ -123,14 +123,14 @@ describe('Backend Mock', () => {
         .respondWith({ statusCode: 200 });
 
       await Axios.get(`${host}/test`);
-      mock.clean();
+      mock.verifyAndRestore();
 
       mock
         .whenPOST({ path: '/test' })
         .respondWith({ statusCode: 200 });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test/;
-      expect(() => mock.clean()).to.not.throw(expectedMesssage);
+      expect(() => mock.verifyAndRestore()).to.not.throw(expectedMesssage);
     });
 
   });

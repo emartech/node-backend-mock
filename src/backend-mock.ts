@@ -78,7 +78,7 @@ export class BackendMock {
     }
   }
 
-  public clean(): void {
+  public verifyAndRestore(): void {
     const pendingInterceptors = this._nockWrapper.getPendingInterceptors();
 
     this._registry.clear();
