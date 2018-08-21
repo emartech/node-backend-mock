@@ -8,7 +8,7 @@ const unresolvedInterceptors = (str: string) => str
   .split('\n')
   .filter((value: string) => value.match(/http:\/\/localhost:80\//));
 
-/* tslint:disable no-unused-expression */
+/* tslint:disable no-unused-expression max-line-length */
 
 describe('Backend Mock', () => {
 
@@ -69,6 +69,40 @@ describe('Backend Mock', () => {
         mock.clean();
       } catch (exception) {
         expect(unresolvedInterceptors((exception as Error).message)).to.have.length(expectedUnresolvedInterceptors);
+      }
+    });
+
+    it('should throw exception if request sent to a non-matching interceptor on the same host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      mock
+        .whenGET({ path: '/test' })
+        .respondWith({ statusCode: 200 });
+
+      try {
+        await Axios.get(`${host}/test`);
+        await Axios.get(`${host}/non-matching`);
+      } catch (exception) {
+        expect((exception as Error).message).to.match(/http:\/\/localhost\/non-matching/);
+        mock.clean();
+      }
+    });
+
+    it('should not throw exception if request sent to a non-matching interceptor on the same host, but unmocked flag is allowed', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host, { allowUnmocked: true });
+
+      mock
+        .whenGET({ path: '/test' })
+        .respondWith({ statusCode: 200 });
+
+      try {
+        await Axios.get(`${host}/test`);
+        await Axios.get(`${host}/non-matching`);
+      } catch (exception) {
+        expect((exception as Error).message).to.not.match(/http:\/\/localhost\/non-matching/);
+        mock.clean();
       }
     });
 

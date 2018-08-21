@@ -1,4 +1,6 @@
 
+export type Indefinable<T> = T | undefined;
+
 export interface IndexableObject extends Object {
   [index: string]: any;
 }
