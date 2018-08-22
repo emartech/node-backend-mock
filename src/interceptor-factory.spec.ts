@@ -8,9 +8,8 @@ const HOST = 'http://localhost';
 
 type Factory = (host: string, settings: Indefinable<InterceptorSettings>, options: RequestOptions) => Interceptor;
 
-function createInterceptorWith(expectedAction: string): Factory {
-  return ((InterceptorFactory as IndexableObject)[expectedAction] as Factory);
-}
+const createInterceptorWith = (expectedAction: string): Factory =>
+  ((InterceptorFactory as IndexableObject)[expectedAction] as Factory);
 
 describe('Interceptor Factory', () => {
 
