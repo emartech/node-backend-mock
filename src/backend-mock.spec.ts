@@ -18,8 +18,6 @@ const createMockWith = (mock: BackendMock) => (expectedAction: string): MockFact
 const createRequestWith = <T>(expectedMethod: string): RequestFactory<T> =>
   (((Axios as IndexableObject)[expectedMethod.toLowerCase()] as Function).bind(Axios) as RequestFactory<T>);
 
-/* tslint:disable no-unused-expression max-line-length */
-
 describe('Backend Mock', () => {
 
   [
@@ -41,7 +39,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(host);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -54,7 +52,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(host);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -68,7 +66,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(`${host}${path}`);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -82,7 +80,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(`${host}${path}`);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -95,7 +93,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(`${host}?param=value`);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -108,7 +106,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(`${host}?param=value&extra=true`);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -174,7 +172,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(host, requestBody);
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -188,7 +186,7 @@ describe('Backend Mock', () => {
 
       const response = await createRequestWith(expectedMethod)(host, { ...requestBody, extra: 'value' });
 
-      expect(response).to.not.undefined;
+      expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
     });
@@ -272,7 +270,7 @@ describe('Backend Mock', () => {
       }
     });
 
-    it('should not throw exception if request sent to a non-matching interceptor on the same host, but unmocked flag is allowed', async () => {
+    it('should not throw exception if request sent to a non-matching interceptor on the same host, but unmocked flag is allowed', async () => { // tslint:disable-line max-line-length
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host, { allowUnmocked: true });
 

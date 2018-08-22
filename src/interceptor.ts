@@ -2,8 +2,6 @@ import { InterceptorRequestOptions, RequestOptions } from './interceptor-request
 import { InterceptorResponseOptions, ResponseOptions } from './interceptor-response-options';
 import { HttpStatusCodes } from './http-status-codes';
 
-/* tslint:disable max-line-length */
-
 export interface InterceptorSettings {
   allowUnmocked: boolean;
 }
@@ -68,7 +66,7 @@ export class Interceptor {
     return this;
   }
 
-  public setResponseOptions({ statusCode = HttpStatusCodes.OK, body = {}, repeat = 0 }: ResponseOptions = {}): Interceptor {
+  public setResponseOptions({ statusCode = HttpStatusCodes.OK, body = {}, repeat = 0 }: ResponseOptions = {}): Interceptor { // tslint:disable-line max-line-length
     this._responseOptions
       .setStatusCode(statusCode)
       .setBody(body)

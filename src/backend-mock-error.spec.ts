@@ -1,8 +1,6 @@
 import { BackendMockError } from './backend-mock-error';
 import { expect } from 'chai';
 
-/* tslint:disable no-unbound-method */
-
 describe('Backend Mock Error', () => {
 
   context('@name', () => {
@@ -40,7 +38,7 @@ describe('Backend Mock Error', () => {
     });
 
     it('should include error class and message if stack trace capture is not exist', () => {
-      const captureStackTrace = Error.captureStackTrace;
+      const captureStackTrace = Error.captureStackTrace; // tslint:disable-line no-unbound-method
       (Error as any).captureStackTrace = undefined;
 
       const interceptors = ['http://domain.com'];
