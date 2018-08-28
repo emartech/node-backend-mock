@@ -130,6 +130,20 @@ describe('Backend Mock', () => {
       mock.verifyAndRestore();
     });
 
+    it('should respond to the issued request with matching headers on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)({ headers: { 'Application-Type': 'text/json' } }).respondWith();
+
+      const response = await createRequestWith(expectedMethod)
+        (host, undefined, { headers: { 'Application-Type': 'text/json', 'X-Request-Id': 666 } });
+
+      expect(response).to.not.eql(undefined);
+
+      mock.verifyAndRestore();
+    });
+
     it('should respond with given status to the issued request on the specified host', async () => {
       const expectedStatus = 200;
       const host = 'http://localhost';
@@ -214,7 +228,7 @@ describe('Backend Mock', () => {
 
   context('#verifyAndRestore', () => {
 
-    it('should throw exception if there is an unresovled interceptor', async () => {
+    it('should throw exception if there is an unresolved interceptor', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
@@ -226,7 +240,7 @@ describe('Backend Mock', () => {
       expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
     });
 
-    it('should throw exception if there are multiple unresovled interceptors', async () => {
+    it('should throw exception if there are multiple unresolved interceptors', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
@@ -242,7 +256,7 @@ describe('Backend Mock', () => {
       expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
     });
 
-    it('should throw exception if there are multiple unresovled batched interceptors', async () => {
+    it('should throw exception if there are multiple unresolved batched interceptors', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
