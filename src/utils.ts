@@ -32,3 +32,12 @@ export const range = (length: number): number[] => {
   }
   return array;
 };
+
+export type Transform = <T extends IndexableObject>(value: T[keyof T]) => any;
+export const map = <T extends IndexableObject>(obj: Readonly<T>, transform: Transform): IndexableObject => {
+  const result: IndexableObject = {};
+  for (const key of Object.keys(obj)) {
+    result[key] = transform(obj[key]);
+  }
+  return result;
+};

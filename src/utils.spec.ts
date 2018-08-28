@@ -1,4 +1,4 @@
-import { isFunction, isEmpty, not, matchObjects, add, set, range } from './utils';
+import { isFunction, isEmpty, not, matchObjects, add, set, range, map } from './utils';
 import { expect } from 'chai';
 
 describe('Utils', () => {
@@ -198,6 +198,28 @@ describe('Utils', () => {
       const rangeSize = 5;
       const result = range(rangeSize);
       expect(result).to.have.length(rangeSize);
+    });
+
+  });
+
+  context('#map', () => {
+
+    it('should return the same object if identity transform function given', () => {
+      const obj = { key: 'value' };
+      const result = map(obj, (value: any) => value);
+      expect(result).to.eql(obj);
+    });
+
+    it('should return object with transformed values if real transform function given', () => {
+      const obj = { key: 'value' };
+      const result = map(obj, (_: any) => 1);
+      expect(result).to.eql({ key: 1 });
+    });
+
+    it('should transform every value of given object', () => {
+      const obj = { fst: 'value', snd: 'value' };
+      const result = map(obj, (_: any) => 1);
+      expect(result).to.eql({ fst: 1, snd: 1 });
     });
 
   });
