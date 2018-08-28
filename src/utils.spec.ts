@@ -206,7 +206,7 @@ describe('Utils', () => {
 
     it('should return the same object if identity transform function given', () => {
       const obj = { key: 'value' };
-      const result = map(obj, (value: any) => value);
+      const result = map(obj, (value: string) => value);
       expect(result).to.eql(obj);
     });
 

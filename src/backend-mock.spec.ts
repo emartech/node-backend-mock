@@ -16,10 +16,12 @@ const createMockWith = (mock: BackendMock) => (expectedAction: string): MockFact
   (((mock as IndexableObject)[expectedAction] as Function).bind(mock) as MockFactory);
 
 const createRequestWith = <T>(expectedMethod: string): RequestFactory<T> =>
-  (url: string, body?: object, config?: AxiosRequestConfig) =>
-    (['POST', 'PUT', 'PATCH'].includes(expectedMethod)) ?
-      ((Axios as IndexableObject)[expectedMethod.toLowerCase()] as Function).bind(Axios)(url, body, config) :
-      ((Axios as IndexableObject)[expectedMethod.toLowerCase()] as Function).bind(Axios)(url, config);
+  (url: string, body?: object, config?: AxiosRequestConfig): AxiosPromise<T> => {
+    const method = expectedMethod.toLowerCase();
+    return (['POST', 'PUT', 'PATCH'].includes(expectedMethod)) ?
+      (((Axios as IndexableObject)[method] as Function).bind(Axios) as RequestFactory<T>)(url, body, config) :
+      (((Axios as IndexableObject)[method] as Function).bind(Axios) as RequestFactory<T>)(url, config);
+  };
 
 describe('Backend Mock', () => {
 
