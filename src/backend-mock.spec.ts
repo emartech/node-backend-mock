@@ -3,10 +3,10 @@ import { BackendMockError } from './backend-mock-error';
 import { IndexableObject, range } from './utils';
 import { expect } from 'chai';
 
-import Axios, { AxiosPromise } from 'axios';
+import Axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
 type MockFactory = (options?: RequestOptions) => BackendMock;
-type RequestFactory<T> = (url: string, body?: object) => AxiosPromise<T>;
+type RequestFactory<T> = (url: string, body?: object, config?: AxiosRequestConfig) => AxiosPromise<T>;
 
 const unresolvedInterceptors = (str: string) => str
   .split('\n')
@@ -16,7 +16,10 @@ const createMockWith = (mock: BackendMock) => (expectedAction: string): MockFact
   (((mock as IndexableObject)[expectedAction] as Function).bind(mock) as MockFactory);
 
 const createRequestWith = <T>(expectedMethod: string): RequestFactory<T> =>
-  (((Axios as IndexableObject)[expectedMethod.toLowerCase()] as Function).bind(Axios) as RequestFactory<T>);
+  (url: string, body?: object, config?: AxiosRequestConfig) =>
+    (['POST', 'PUT', 'PATCH'].includes(expectedMethod)) ?
+      ((Axios as IndexableObject)[expectedMethod.toLowerCase()] as Function).bind(Axios)(url, body, config) :
+      ((Axios as IndexableObject)[expectedMethod.toLowerCase()] as Function).bind(Axios)(url, config);
 
 describe('Backend Mock', () => {
 
@@ -105,6 +108,20 @@ describe('Backend Mock', () => {
       createMockWith(mock)(expectedAction)({ query: { param: 'value' } }).respondWith();
 
       const response = await createRequestWith(expectedMethod)(`${host}?param=value&extra=true`);
+
+      expect(response).to.not.eql(undefined);
+
+      mock.verifyAndRestore();
+    });
+
+    it('should respond to the issued request with expected headers on the specified host', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)({ headers: { 'Application-Type': 'text/json' } }).respondWith();
+
+      const response = await createRequestWith(expectedMethod)
+        (host, undefined, { headers: { 'Application-Type': 'text/json' } });
 
       expect(response).to.not.eql(undefined);
 

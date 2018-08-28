@@ -87,6 +87,7 @@ describe('Interceptor', () => {
       expectedRequestOptions
         .setMethod('POST')
         .setPath('/path')
+        .setHeaders({ 'Application-Type': 'text/json' })
         .setQuery({ query: true })
         .setBody({ data: {} });
 

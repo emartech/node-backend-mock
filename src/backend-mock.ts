@@ -9,6 +9,7 @@ import { NockWrapper } from './nock-wrapper';
 
 export interface RequestOptions {
   path?: Path;
+  headers?: object;
   query?: object;
   body?: object;
 }

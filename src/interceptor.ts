@@ -56,17 +56,28 @@ export class Interceptor {
     return this;
   }
 
-  public setRequestOptions({ path = '/', method = 'GET', query = {}, body = {} }: RequestOptions = {}): Interceptor {
+  public setRequestOptions({
+    path = '/',
+    method = 'GET',
+    headers = {},
+    query = {},
+    body = {},
+  }: RequestOptions = {}): Interceptor {
     this._requestOptions
-      .setPath(path)
       .setMethod(method)
+      .setPath(path)
+      .setHeaders(headers)
       .setQuery(query)
       .setBody(body);
 
     return this;
   }
 
-  public setResponseOptions({ statusCode = HttpStatusCodes.OK, body = {}, repeat = 0 }: ResponseOptions = {}): Interceptor { // tslint:disable-line max-line-length
+  public setResponseOptions({
+    statusCode = HttpStatusCodes.OK,
+    body = {},
+    repeat = 0,
+  }: ResponseOptions = {}): Interceptor {
     this._responseOptions
       .setStatusCode(statusCode)
       .setBody(body)
