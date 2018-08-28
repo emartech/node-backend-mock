@@ -137,11 +137,39 @@ describe('Backend Mock', () => {
       createMockWith(mock)(expectedAction)({ headers: { 'Application-Type': 'text/json' } }).respondWith();
 
       const response = await createRequestWith(expectedMethod)
-        (host, undefined, { headers: { 'Application-Type': 'text/json', 'X-Request-Id': 666 } });
+        (host, undefined, { headers: { 'Application-Type': 'text/json', 'X-Request-Id': 222 } });
 
       expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
+    });
+
+    it('should throw exception if expected header value is not the same', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)({ headers: { 'Application-Type': 'text/json' } }).respondWith();
+
+      try {
+        await createRequestWith(expectedMethod)(host, undefined, { headers: { 'Application-Type': 'text/html' } });
+      } catch (exception) {
+        expect(() => mock.verifyAndRestore()).to.throw(BackendMockError);
+        expect(exception).to.instanceOf(Error);
+      }
+    });
+
+    it('should throw exception if expected header field not present', async () => {
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)({ headers: { 'X-Request-Id': 222 } }).respondWith();
+
+      try {
+        await createRequestWith(expectedMethod)(host, undefined);
+      } catch (exception) {
+        expect(() => mock.verifyAndRestore()).to.throw(BackendMockError);
+        expect(exception).to.instanceOf(Error);
+      }
     });
 
     it('should respond with given status to the issued request on the specified host', async () => {
@@ -222,6 +250,36 @@ describe('Backend Mock', () => {
       expect(response).to.not.eql(undefined);
 
       mock.verifyAndRestore();
+    });
+
+    it('should throw exception if expected body value is not the same', async () => {
+      const requestBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)({ body: requestBody }).respondWith();
+
+      try {
+        await createRequestWith(expectedMethod)(host, { irrelevant: false });
+      } catch (exception) {
+        expect(() => mock.verifyAndRestore()).to.throw(BackendMockError);
+        expect(exception).to.instanceOf(Error);
+      }
+    });
+
+    it('should throw exception if expected header field not present', async () => {
+      const requestBody = { irrelevant: true };
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)({ body: requestBody }).respondWith();
+
+      try {
+        await createRequestWith(expectedMethod)(host, {});
+      } catch (exception) {
+        expect(() => mock.verifyAndRestore()).to.throw(BackendMockError);
+        expect(exception).to.instanceOf(Error);
+      }
     });
 
   }));
