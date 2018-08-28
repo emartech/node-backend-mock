@@ -4,6 +4,7 @@ export type Path = string | RegExp;
 export interface RequestOptions {
   path?: Path;
   method?: Method;
+  headers?: object;
   query?: object;
   body?: object;
 }
@@ -12,6 +13,7 @@ export class InterceptorRequestOptions {
 
   private _method: Method = 'GET';
   private _path: Path = '/';
+  private _headers: object = {};
   private _query: object = {};
   private _body: object = {};
 
@@ -21,6 +23,10 @@ export class InterceptorRequestOptions {
 
   public get path(): Path {
     return this._path;
+  }
+
+  public get headers(): object {
+    return this._headers;
   }
 
   public get query(): object {
@@ -38,6 +44,11 @@ export class InterceptorRequestOptions {
 
   public setPath(path: Path): InterceptorRequestOptions {
     this._path = path;
+    return this;
+  }
+
+  public setHeaders(headers: object): InterceptorRequestOptions {
+    this._headers = headers;
     return this;
   }
 

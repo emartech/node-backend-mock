@@ -25,6 +25,16 @@ describe('Interceptor Request Options', () => {
 
     });
 
+    context('@headers', () => {
+
+      it('should return empty object as default path value', () => {
+        const description = new InterceptorRequestOptions();
+        const result = description.headers;
+        expect(result).to.eql({});
+      });
+
+    });
+
     context('@query', () => {
 
       it('should return empty object as default request query', () => {
@@ -65,6 +75,16 @@ describe('Interceptor Request Options', () => {
         const description = new InterceptorRequestOptions();
         description.setPath('/path');
         expect(description.path).to.eql('/path');
+      });
+
+    });
+
+    context('#setHeaders', () => {
+
+      it('should set given headers', () => {
+        const description = new InterceptorRequestOptions();
+        description.setHeaders({ 'Application-Type': 'text/json' });
+        expect(description.headers).to.eql({ 'Application-Type': 'text/json' });
       });
 
     });
