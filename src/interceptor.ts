@@ -75,11 +75,13 @@ export class Interceptor {
 
   public setResponseOptions({
     statusCode = HttpStatusCodes.OK,
+    headers = {},
     body = {},
     repeat = 0,
   }: ResponseOptions = {}): Interceptor {
     this._responseOptions
       .setStatusCode(statusCode)
+      .setHeaders(headers)
       .setBody(body)
       .setRepeat(repeat);
 

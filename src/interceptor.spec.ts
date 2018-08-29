@@ -114,6 +114,7 @@ describe('Interceptor', () => {
 
       expectedResponseOptions
         .setStatusCode(HttpStatusCodes.INTERNAL_SERVER_ERROR)
+        .setHeaders({ 'Content-Type': 'text/html; charset=utf-8' })
         .setBody({ data: {} })
         .setRepeat(responseRepeats);
 
