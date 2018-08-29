@@ -1,5 +1,6 @@
 import { BackendMock, RequestOptions } from './backend-mock';
 import { BackendMockError } from './backend-mock-error';
+import { HttpStatusCodes } from './http-status-codes';
 import { IndexableObject, range } from './utils';
 import { expect } from 'chai';
 
@@ -173,7 +174,7 @@ describe('Backend Mock', () => {
     });
 
     it('should respond with given status to the issued request on the specified host', async () => {
-      const expectedStatus = 200;
+      const expectedStatus = HttpStatusCodes.OK;
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);
 
@@ -292,7 +293,7 @@ describe('Backend Mock', () => {
 
       mock
         .whenGET({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test/;
       expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
@@ -304,11 +305,11 @@ describe('Backend Mock', () => {
 
       mock
         .whenGET({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       mock
         .whenPOST({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test(.|\n)+POST http:\/\/localhost:80\/test/;
       expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
@@ -321,7 +322,7 @@ describe('Backend Mock', () => {
       mock
         .whenGET({ path: '/test' })
         .whenPOST({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test(.|\n)+POST http:\/\/localhost:80\/test/;
       expect(() => mock.verifyAndRestore()).to.throw(BackendMockError, expectedMesssage);
@@ -335,7 +336,7 @@ describe('Backend Mock', () => {
       mock
         .whenGET({ path: '/test' })
         .whenPOST({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       try {
         mock.verifyAndRestore();
@@ -350,7 +351,7 @@ describe('Backend Mock', () => {
 
       mock
         .whenGET({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       try {
         await Axios.get(`${host}/test`);
@@ -367,7 +368,7 @@ describe('Backend Mock', () => {
 
       mock
         .whenGET({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       try {
         await Axios.get(`${host}/test`);
@@ -392,14 +393,14 @@ describe('Backend Mock', () => {
 
       mock
         .whenGET({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       await Axios.get(`${host}/test`);
       mock.verifyAndRestore();
 
       mock
         .whenPOST({ path: '/test' })
-        .respondWith({ statusCode: 200 });
+        .respondWith({ statusCode: HttpStatusCodes.OK });
 
       const expectedMesssage = /GET http:\/\/localhost:80\/test/;
       expect(() => mock.verifyAndRestore()).to.not.throw(expectedMesssage);

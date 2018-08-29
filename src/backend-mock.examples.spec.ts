@@ -1,3 +1,4 @@
+import { HttpStatusCodes } from './http-status-codes';
 import { BackendMock } from './backend-mock';
 
 import Axios from 'axios';
@@ -70,7 +71,7 @@ describe('Backend Mock Examples', () => {
 
     mock
       .whenPOST({ path: '/api/healthcheck' })
-      .respondWith({ statusCode: 201, body: { id: 1000 } });
+      .respondWith({ statusCode: HttpStatusCodes.CREATED, body: { id: 1000 } });
 
     await Axios.post(`${host}/api/healthcheck`);
 
