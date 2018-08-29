@@ -3,7 +3,7 @@
 - [Intercept request without any specific expectation](#intercept-request-without-any-specific-expectation)
 - [Intercept multiple requests to the same host and with the same response](#intercept-multiple-requests-to-the-same-host-and-with-the-same-response)
 - [Intercept request to the given host with expected or matching path](#intercept-request-to-the-given-host-with-expected-or-matching-path)
-- [Intercept request to the given host with matching body and/or headers](#intercept-request-to-the-given-host-with-matching-body-and/or-headers)
+- [Intercept request to the given host with matching body and/or headers](#intercept-request-to-the-given-host-with-matching-body-and-headers)
 - [Intercept request to the given host with customized response](#intercept-request-to-the-given-host-with-customized-response)
 - [Intercept requests to the given host with the same response multiple times](#intercept-requests-to-the-given-host-with-the-same-response-multiple-times)
 
@@ -58,7 +58,7 @@ await Axios.delete(`${host}/api/healthcheck`);
 mock.verifyAndRestore();
 ```
 
-### Intercept request to the given host with matching body and/or headers
+### Intercept request to the given host with matching body and headers
 
 ```typescript
 const host = 'https://service.example.net';
