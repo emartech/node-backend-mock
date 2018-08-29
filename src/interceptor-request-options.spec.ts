@@ -67,6 +67,12 @@ describe('Interceptor Request Options', () => {
         expect(description.method).to.eql('POST');
       });
 
+      it('should return interceptor request options instance', () => {
+        const description = new InterceptorRequestOptions();
+        const instance = description.setMethod('POST');
+        expect(instance).to.instanceOf(InterceptorRequestOptions);
+      });
+
     });
 
     context('#setPath', () => {
@@ -75,6 +81,12 @@ describe('Interceptor Request Options', () => {
         const description = new InterceptorRequestOptions();
         description.setPath('/path');
         expect(description.path).to.eql('/path');
+      });
+
+      it('should return interceptor request options instance', () => {
+        const description = new InterceptorRequestOptions();
+        const instance = description.setPath('/path');
+        expect(instance).to.instanceOf(InterceptorRequestOptions);
       });
 
     });
@@ -87,6 +99,12 @@ describe('Interceptor Request Options', () => {
         expect(description.headers).to.eql({ 'Application-Type': 'text/json' });
       });
 
+      it('should return interceptor request options instance', () => {
+        const description = new InterceptorRequestOptions();
+        const instance = description.setHeaders({ 'Application-Type': 'text/json' });
+        expect(instance).to.instanceOf(InterceptorRequestOptions);
+      });
+
     });
 
     context('#setQuery', () => {
@@ -97,6 +115,12 @@ describe('Interceptor Request Options', () => {
         expect(description.query).to.eql({ parameter: 1 });
       });
 
+      it('should return interceptor request options instance', () => {
+        const description = new InterceptorRequestOptions();
+        const instance = description.setQuery({ parameter: 1 });
+        expect(instance).to.instanceOf(InterceptorRequestOptions);
+      });
+
     });
 
     context('#setBody', () => {
@@ -105,6 +129,12 @@ describe('Interceptor Request Options', () => {
         const description = new InterceptorRequestOptions();
         description.setBody({ data: {} });
         expect(description.body).to.eql({ data: {} });
+      });
+
+      it('should return interceptor request options instance', () => {
+        const description = new InterceptorRequestOptions();
+        const instance = description.setBody({ data: {} });
+        expect(instance).to.instanceOf(InterceptorRequestOptions);
       });
 
     });

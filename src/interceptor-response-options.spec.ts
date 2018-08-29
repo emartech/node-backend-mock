@@ -58,6 +58,12 @@ describe('Interceptor Response Options', () => {
         expect(description.statusCode).to.eql(HttpStatusCodes.UNAUTHORIZED);
       });
 
+      it('should return interceptor response options instance', () => {
+        const description = new InterceptorResponseOptions();
+        const instance = description.setStatusCode(HttpStatusCodes.UNAUTHORIZED);
+        expect(instance).to.instanceOf(InterceptorResponseOptions);
+      });
+
     });
 
     context('#setHeaders', () => {
@@ -66,6 +72,12 @@ describe('Interceptor Response Options', () => {
         const description = new InterceptorResponseOptions();
         description.setHeaders({ 'Content-Type': 'text/html; charset=utf-8' });
         expect(description.headers).to.eql({ 'Content-Type': 'text/html; charset=utf-8' });
+      });
+
+      it('should return interceptor response options instance', () => {
+        const description = new InterceptorResponseOptions();
+        const instance = description.setHeaders({ 'Content-Type': 'text/html; charset=utf-8' });
+        expect(instance).to.instanceOf(InterceptorResponseOptions);
       });
 
     });
@@ -78,6 +90,12 @@ describe('Interceptor Response Options', () => {
         expect(description.body).to.eql({ data: {} });
       });
 
+      it('should return interceptor response options instance', () => {
+        const description = new InterceptorResponseOptions();
+        const instance = description.setBody({ data: {} });
+        expect(instance).to.instanceOf(InterceptorResponseOptions);
+      });
+
     });
 
     context('#setRepeat', () => {
@@ -85,10 +103,15 @@ describe('Interceptor Response Options', () => {
       it('should set given response repeat', () => {
         const expectedRepeats = 5;
         const description = new InterceptorResponseOptions();
-
         description.setRepeat(expectedRepeats);
-
         expect(description.repeat).to.eql(expectedRepeats);
+      });
+
+      it('should return interceptor response options instance', () => {
+        const repeats = 5;
+        const description = new InterceptorResponseOptions();
+        const instance = description.setRepeat(repeats);
+        expect(instance).to.instanceOf(InterceptorResponseOptions);
       });
 
     });

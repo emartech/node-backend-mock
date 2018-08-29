@@ -96,6 +96,13 @@ describe('Interceptor', () => {
       expect(interceptor.requestOptions).to.eql(expectedRequestOptions);
     });
 
+    it('should return interceptor instance', () => {
+      const requestOptions = new InterceptorRequestOptions();
+      const interceptor = new Interceptor(HOST);
+      const instance = interceptor.setRequestOptions(requestOptions);
+      expect(instance).to.instanceOf(Interceptor);
+    });
+
   });
 
   context('#setResponseOptions', () => {
@@ -113,6 +120,13 @@ describe('Interceptor', () => {
       interceptor.setResponseOptions(expectedResponseOptions);
 
       expect(interceptor.responseOptions).to.eql(expectedResponseOptions);
+    });
+
+    it('should return interceptor instance', () => {
+      const requestOptions = new InterceptorRequestOptions();
+      const interceptor = new Interceptor(HOST);
+      const instance = interceptor.setResponseOptions(requestOptions);
+      expect(instance).to.instanceOf(Interceptor);
     });
 
   });
