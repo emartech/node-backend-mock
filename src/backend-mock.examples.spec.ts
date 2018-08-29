@@ -12,9 +12,7 @@ describe('Backend Mock Examples', () => {
       .whenPOST()
       .respondWith();
 
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-    await Axios.post(host, requestBody, requestHeaders);
+    await Axios.post(host);
 
     mock.verifyAndRestore();
   });
@@ -29,12 +27,9 @@ describe('Backend Mock Examples', () => {
       .whenHEAD()
       .respondWith();
 
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-
-    await Axios.post(host, requestBody, requestHeaders);
-    await Axios.get(host, requestHeaders);
-    await Axios.head(host, requestHeaders);
+    await Axios.post(host);
+    await Axios.get(host);
+    await Axios.head(host);
 
     mock.verifyAndRestore();
   });
@@ -48,9 +43,7 @@ describe('Backend Mock Examples', () => {
       .whenDELETE({ path: /\/[a-z]+\/healthcheck/ })
       .respondWith();
 
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-    await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
+    await Axios.post(`${host}/api/healthcheck`);
     await Axios.delete(`${host}/api/healthcheck`);
 
     mock.verifyAndRestore();
@@ -79,9 +72,7 @@ describe('Backend Mock Examples', () => {
       .whenPOST({ path: '/api/healthcheck' })
       .respondWith({ statusCode: 201, body: { id: 1000 } });
 
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-    await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
+    await Axios.post(`${host}/api/healthcheck`);
 
     mock.verifyAndRestore();
   });
@@ -94,10 +85,8 @@ describe('Backend Mock Examples', () => {
       .whenPOST({ path: '/api/healthcheck' })
       .respondWith({ repeat: 2 });
 
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-    await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
-    await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
+    await Axios.post(`${host}/api/healthcheck`);
+    await Axios.post(`${host}/api/healthcheck`);
 
     mock.verifyAndRestore();
   });

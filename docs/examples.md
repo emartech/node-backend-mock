@@ -1,5 +1,12 @@
 # Examples
 
+- [Intercept request without any specific expectation](#intercept-request-without-any-specific-expectation)
+- [Intercept multiple requests to the same host and with the same response](#intercept-multiple-requests-to-the-same-host-and-with-the-same-response)
+- [Intercept request to the given host with expected or matching path](#intercept-request-to-the-given-host-with-expected-or-matching-path)
+- [Intercept request to the given host with matching body and/or headers](#intercept-request-to-the-given-host-with-matching-body-and/or-headers)
+- [Intercept request to the given host with customized response](#intercept-request-to-the-given-host-with-customized-response)
+- [Intercept requests to the given host with the same response multiple times](#intercept-requests-to-the-given-host-with-the-same-response-multiple-times)
+
 ### Intercept request without any specific expectation
 
 ```typescript
@@ -10,9 +17,7 @@ mock
   .whenPOST()
   .respondWith();
 
-const requestBody = { shouldCheck: true };
-const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-await Axios.post(host, requestBody, requestHeaders);
+await Axios.post(host);
 
 mock.verifyAndRestore();
 ```
@@ -29,12 +34,9 @@ mock
   .whenHEAD()
   .respondWith();
 
-const requestBody = { shouldCheck: true };
-const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-
-await Axios.post(host, requestBody, requestHeaders);
-await Axios.get(host, requestHeaders);
-await Axios.head(host, requestHeaders);
+await Axios.post(host);
+await Axios.get(host);
+await Axios.head(host);
 
 mock.verifyAndRestore();
 ```
@@ -50,9 +52,7 @@ mock
   .whenDELETE({ path: /\/[a-z]+\/healthcheck/ })
   .respondWith();
 
-const requestBody = { shouldCheck: true };
-const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
+await Axios.post(`${host}/api/healthcheck`);
 await Axios.delete(`${host}/api/healthcheck`);
 
 mock.verifyAndRestore();
@@ -85,9 +85,23 @@ mock
   .whenPOST({ path: '/api/healthcheck' })
   .respondWith({ statusCode: 201, body: { id: 1000 } });
 
-const requestBody = { shouldCheck: true };
-const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
+await Axios.post(`${host}/api/healthcheck`);
+
+mock.verifyAndRestore();
+```
+
+### Intercept requests to the given host with the same response multiple times
+
+```typescript
+const host = 'https://service.example.net';
+const mock = BackendMock.createFor(host);
+
+mock
+  .whenPOST({ path: '/api/healthcheck' })
+  .respondWith({ repeat: 2 });
+
+await Axios.post(`${host}/api/healthcheck`);
+await Axios.post(`${host}/api/healthcheck`);
 
 mock.verifyAndRestore();
 ```
