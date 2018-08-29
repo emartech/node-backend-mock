@@ -16,6 +16,16 @@ describe('Interceptor Response Options', () => {
 
     });
 
+    context('@headers', () => {
+
+      it('should return empty object as default response headers', () => {
+        const description = new InterceptorResponseOptions();
+        const result = description.headers;
+        expect(result).to.eql({});
+      });
+
+    });
+
     context('@body', () => {
 
       it('should return empty object as default response body', () => {
@@ -46,6 +56,16 @@ describe('Interceptor Response Options', () => {
         const description = new InterceptorResponseOptions();
         description.setStatusCode(HttpStatusCodes.UNAUTHORIZED);
         expect(description.statusCode).to.eql(HttpStatusCodes.UNAUTHORIZED);
+      });
+
+    });
+
+    context('#setHeaders', () => {
+
+      it('should set given response headers', () => {
+        const description = new InterceptorResponseOptions();
+        description.setHeaders({ 'Content-Type': 'text/html; charset=utf-8' });
+        expect(description.headers).to.eql({ 'Content-Type': 'text/html; charset=utf-8' });
       });
 
     });
