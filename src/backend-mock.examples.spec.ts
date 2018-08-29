@@ -39,61 +39,33 @@ describe('Backend Mock Examples', () => {
     mock.verifyAndRestore();
   });
 
-  it('should be able to mock request to the expected host with expected path', async () => {
+  it('should be able to mock request to the expected host with expected or matching path', async () => {
     const host = 'https://service.example.net';
     const mock = BackendMock.createFor(host);
 
     mock
       .whenPOST({ path: '/api/healthcheck' })
+      .whenDELETE({ path: /\/[a-z]+\/healthcheck/ })
       .respondWith();
 
     const requestBody = { shouldCheck: true };
     const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
     await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
+    await Axios.delete(`${host}/api/healthcheck`);
 
     mock.verifyAndRestore();
   });
 
-  it('should be able to mock request to the expected host with matching path', async () => {
+  it('should be able to mock request with expected request body and/or header', async () => {
     const host = 'https://service.example.net';
+    const requestBody = { shouldCheck: true };
+    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
     const mock = BackendMock.createFor(host);
 
     mock
-      .whenPOST({ path: /\/[a-z]+\/healthcheck/ })
+      .whenPOST({ path: '/api/healthcheck', body: requestBody, ...requestHeaders })
       .respondWith();
 
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-    await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
-
-    mock.verifyAndRestore();
-  });
-
-  it('should be able to mock request with expected request body', async () => {
-    const host = 'https://service.example.net';
-    const mock = BackendMock.createFor(host);
-
-    mock
-      .whenPOST({ path: '/api/healthcheck', body: { shouldCheck: true } })
-      .respondWith();
-
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
-    await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
-
-    mock.verifyAndRestore();
-  });
-
-  it('should be able to mock request with expected request header', async () => {
-    const host = 'https://service.example.net';
-    const mock = BackendMock.createFor(host);
-
-    mock
-      .whenPOST({ path: '/api/healthcheck', headers: { 'Content-Type': 'text/html; charset=utf-8' } })
-      .respondWith();
-
-    const requestBody = { shouldCheck: true };
-    const requestHeaders = { headers: { 'Content-Type': 'text/html; charset=utf-8' } };
     await Axios.post(`${host}/api/healthcheck`, requestBody, requestHeaders);
 
     mock.verifyAndRestore();

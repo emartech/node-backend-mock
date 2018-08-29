@@ -3,6 +3,7 @@
 .idea/
 .vscode/
 config/
+docs/
 node_modules/
 src/
 typings/

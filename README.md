@@ -12,6 +12,6 @@ npm install @emartech/backend-mock@latest --save-dev
 
 ## Documentation
 
-- Examples *(in progress)*
+- [Examples](./docs/examples.md) *(in progress)*
 - Best practices *(in progress)*
 - API *(in progress)*
