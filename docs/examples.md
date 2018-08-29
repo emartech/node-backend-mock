@@ -83,7 +83,7 @@ const mock = BackendMock.createFor(host);
 
 mock
   .whenPOST({ path: '/api/healthcheck' })
-  .respondWith({ statusCode: 201, body: { id: 1000 } });
+  .respondWith({ statusCode: 201, body: { id: 1000 }, headers: { 'X-Request-Id': 222 } });
 
 await Axios.post(`${host}/api/healthcheck`);
 

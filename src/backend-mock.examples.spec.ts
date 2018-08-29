@@ -71,7 +71,7 @@ describe('Backend Mock Examples', () => {
 
     mock
       .whenPOST({ path: '/api/healthcheck' })
-      .respondWith({ statusCode: HttpStatusCodes.CREATED, body: { id: 1000 } });
+      .respondWith({ statusCode: HttpStatusCodes.CREATED, body: { id: 1000 }, headers: { 'X-Request-Id': 222 } });
 
     await Axios.post(`${host}/api/healthcheck`);
 
