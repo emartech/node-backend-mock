@@ -201,6 +201,20 @@ describe('Backend Mock', () => {
       mock.verifyAndRestore();
     });
 
+    it('should respond also with given headers to the issued request on the specified host', async () => {
+      const expectedHeaders = { 'X-Request-Id': 222 };
+      const host = 'http://localhost';
+      const mock = BackendMock.createFor(host);
+
+      createMockWith(mock)(expectedAction)().respondWith({ headers: expectedHeaders });
+
+      const { headers } = await createRequestWith(expectedMethod)(host);
+
+      expect((headers as IndexableObject)['x-request-id']).to.eql(expectedHeaders['X-Request-Id']);
+
+      mock.verifyAndRestore();
+    });
+
     it('should respond as many times as repeat count given', async () => {
       const host = 'http://localhost';
       const mock = BackendMock.createFor(host);

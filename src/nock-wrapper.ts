@@ -1,7 +1,7 @@
 import { matchObjects, map } from './utils';
 import { Interceptor } from './interceptor';
 
-import nock from 'nock';
+import nock, { HttpHeaders } from 'nock';
 
 export { Options } from 'nock';
 
@@ -16,7 +16,7 @@ export class NockWrapper {
       .intercept(requestOptions.path, requestOptions.method, matchObjects(requestOptions.body))
       .query(matchObjects(requestOptions.query))
       .times(responseOptions.repeat)
-      .reply(responseOptions.statusCode, responseOptions.body);
+      .reply(responseOptions.statusCode, responseOptions.body, responseOptions.headers as HttpHeaders);
   }
 
   public releaseInterceptors(): void {
